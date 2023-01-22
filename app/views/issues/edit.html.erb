@@ -1,0 +1,10 @@
+<h1>Editing issue</h1>
+
+<%= render "form", issue: @issue %>
+
+<br>
+
+<div>
+  <%= link_to "Show this issue", game_room_issue_path(@game_room, @issue) %> |
+  <%= link_to "Back to issues", game_room_issues_path(@game_room) %>
+</div>
