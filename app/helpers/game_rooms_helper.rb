@@ -1,0 +1,2 @@
+module GameRoomsHelper
+end

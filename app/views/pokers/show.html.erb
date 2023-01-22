@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @poker %>
+
+<div>
+  <%= link_to "Edit this poker", edit_poker_path(@poker) %> |
+  <%= link_to "Back to pokers", pokers_path %>
+
+  <%= button_to "Destroy this poker", @poker, method: :delete %>
+</div>

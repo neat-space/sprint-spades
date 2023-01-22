@@ -1,0 +1,21 @@
+<%= form_with(model: poker) do |form| %>
+  <% if poker.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(poker.errors.count, "error") %> prohibited this poker from being saved:</h2>
+
+      <ul>
+        <% poker.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div>
+    <%= form.label :story_points, style: "display: block" %>
+    <%= form.number_field :story_points %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
