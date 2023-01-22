@@ -1,13 +1,51 @@
+<div class="container-fluid mt-5">
+  <div class="row">
+    <div class="col-9">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="card">
+              <div class="card-body">
+                <p class="card-text">Current Issue: <%= @game_room.current_issue&.title %></p>
+                <p class="card-text">Pokers:</p>
+                <ul>
+                  <% @game_room.pokers.each do |poker| %>
+                    <li><%= poker.user.email %> - <%= poker.point %></li>
+                  <% end %>
+                </ul>
+              </div>
+              <div class="card-footer">
+                <%= link_to 'Edit', edit_game_room_path(@game_room), class: 'btn btn-secondary' %>
+                <%= link_to 'Back', game_rooms_path, class: 'btn btn-primary' %>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="col-3">
+      <div class="card">
+        <div class="card-header">
+          Issues
+        </div>
+        <div class="card-body">
+          <ul class="list-group">
+            <% @game_room.issues.recent.each do |issue| %>
+              <li class="list-group-item d-flex justify-content-between align-items-start <%= issue_active?(@game_room, issue) %>">
+                <div class="ms-2 me-auto">
+                  <div class="fw-bold"><%= issue.title %></div>
+                  <%= issue.description %>
+                </div>
+              </li>
+            <% end %>
+            <li class="list-group-item">
+              <%= link_to "+ New Issue", new_game_room_issue_path(@game_room), class: 'btn btn-btn-primary btn-outline-primary' %>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-<%= render @game_room %>
+<div class="container">
 
-<h2>Issues</h2>
-<p><%= link_to "Create a new Issue", new_game_room_issue_path(@game_room) %></p>
-<%= render @game_room.issues %>
-
-<div>
-  <%= link_to "Edit this game room", edit_game_room_path(@game_room) %> |
-  <%= link_to "Back to game rooms", game_rooms_path %>
-
-  <%= button_to "Destroy this game room", @game_room, method: :delete %>
 </div>

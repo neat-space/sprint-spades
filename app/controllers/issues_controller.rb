@@ -26,6 +26,7 @@ class IssuesController < ApplicationController
 
     respond_to do |format|
       if @issue.save
+        @game_room.update(current_issue_id: @issue.id)
         format.html { redirect_to game_room_url(@game_room), notice: "Issue was successfully created." }
         format.json { render :show, status: :created, location: @issue }
       else

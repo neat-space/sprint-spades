@@ -1,14 +1,26 @@
-<p style="color: green"><%= notice %></p>
-
-<h1>Game rooms</h1>
-
-<div id="game_rooms">
-  <% @game_rooms.each do |game_room| %>
-    <%= render game_room %>
-    <p>
-      <%= link_to "Show this game room", game_room %>
-    </p>
-  <% end %>
+<h1 class="visually-hidden">Game Rooms</h1>
+<div class="px-4 py-5 my-5 text-center">
+  <h1 class="display-5 fw-bold">Game Rooms</h1>
+  <div class="col-lg-6 mx-auto">
+    <p class="lead mb-4">Select existing game room or create a new one to start scrum poker planning.</p>
+    <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+      <%= link_to "Create A new Game" , new_game_room_path, class: 'btn btn-primary btn-lg px-4 gap-3' %>
+    </div>
+  </div>
 </div>
-
-<%= link_to "New game room", new_game_room_path %>
+<div class="container">
+  <div class="row">
+    <% @game_rooms.each do |game_room| %>
+      <div class="col-sm-3">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title"><%= game_room.name %></h5>
+            <%= link_to 'Show', game_room, class: 'btn btn-primary' %>
+            <%= link_to 'Edit', edit_game_room_path(game_room), class: 'btn btn-secondary' %>
+            <%= link_to 'Delete', game_room, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
