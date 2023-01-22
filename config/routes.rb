@@ -8,5 +8,6 @@ Rails.application.routes.draw do
     end
     resources :pokers
   end
-  
+
+  get '/game_rooms/join/:token', to: 'game_room_users#create'
 end
