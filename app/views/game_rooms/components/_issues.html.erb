@@ -1,0 +1,20 @@
+<div class="card">
+  <div class="card-header">
+    Issues
+  </div>
+  <div class="card-body">
+    <ul class="list-group">
+      <% issues.recent.each do |issue| %>
+        <li class="list-group-item d-flex justify-content-between align-items-start <%= issue_active?(@game_room, issue) %>">
+          <div class="ms-2 me-auto">
+            <div class="fw-bold"><%= issue.title %></div>
+            <%= issue.description %>
+          </div>
+        </li>
+      <% end %>
+      <li class="list-group-item">
+        <%= link_to "+ New Issue", new_game_room_issue_path(@game_room), class: 'btn btn-btn-primary btn-outline-primary' %>
+      </li>
+    </ul>
+  </div>
+</div>
