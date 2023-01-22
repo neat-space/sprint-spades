@@ -6,9 +6,9 @@
   <% @pokers.each do |poker| %>
     <%= render poker %>
     <p>
-      <%= link_to "Show this poker", poker %>
+      <%= link_to "Show this poker", game_room_poker_path(@game_room, poker) %>
     </p>
   <% end %>
 </div>
 
-<%= link_to "New poker", new_poker_path %>
+<%= link_to "New poker", new_game_room_poker_path(@game_room) %>

@@ -3,8 +3,8 @@
 <%= render @poker %>
 
 <div>
-  <%= link_to "Edit this poker", edit_poker_path(@poker) %> |
-  <%= link_to "Back to pokers", pokers_path %>
+  <%= link_to "Edit this poker", edit_game_room_poker_path(@game_room, @poker) %> |
+  <%= link_to "Back to pokers", game_room_pokers_path(@game_room) %>
 
-  <%= button_to "Destroy this poker", @poker, method: :delete %>
+  <%= button_to "Destroy this poker", game_room_poker_path(@game_room, @poker), method: :delete %>
 </div>

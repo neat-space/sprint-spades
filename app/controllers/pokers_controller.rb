@@ -1,5 +1,6 @@
 class PokersController < ApplicationController
   before_action :set_poker, only: %i[ show edit update destroy ]
+  before_action :set_game_room
 
   # GET /pokers or /pokers.json
   def index
@@ -22,10 +23,11 @@ class PokersController < ApplicationController
   # POST /pokers or /pokers.json
   def create
     @poker = current_user.pokers.new(poker_params)
+    @poker.issue = @game_room.current_issue
 
     respond_to do |format|
       if @poker.save
-        format.html { redirect_to poker_url(@poker), notice: "Poker was successfully created." }
+        format.html { redirect_to game_room_poker_url(@game_room, @poker), notice: "Poker was successfully created." }
         format.json { render :show, status: :created, location: @poker }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +40,7 @@ class PokersController < ApplicationController
   def update
     respond_to do |format|
       if @poker.update(poker_params)
-        format.html { redirect_to poker_url(@poker), notice: "Poker was successfully updated." }
+        format.html { redirect_to game_room_poker_url(@game_room, @poker), notice: "Poker was successfully updated." }
         format.json { render :show, status: :ok, location: @poker }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -52,7 +54,7 @@ class PokersController < ApplicationController
     @poker.destroy
 
     respond_to do |format|
-      format.html { redirect_to pokers_url, notice: "Poker was successfully destroyed." }
+      format.html { redirect_to game_room_pokers_url(@game_room), notice: "Poker was successfully destroyed." }
       format.json { head :no_content }
     end
   end
@@ -61,6 +63,10 @@ class PokersController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_poker
       @poker = Poker.find(params[:id])
+    end
+
+    def set_game_room
+      @game_room = GameRoom.find(params[:game_room_id])
     end
 
     # Only allow a list of trusted parameters through.

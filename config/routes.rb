@@ -3,8 +3,10 @@ Rails.application.routes.draw do
   devise_for :users
 
   resources :game_rooms do
-    resources :issues
+    resources :issues do
+      post :set_current_issue
+    end
+    resources :pokers
   end
-  resources :pokers
   
 end

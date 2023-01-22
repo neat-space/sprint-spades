@@ -1,5 +1,5 @@
 class IssuesController < ApplicationController
-  before_action :set_issue, only: %i[ show edit update destroy ]
+  before_action :set_issue, only: %i[ show edit update destroy]
   before_action :set_game_room
 
   # GET /issues or /issues.json
@@ -52,9 +52,26 @@ class IssuesController < ApplicationController
   def destroy
     @issue.destroy
 
+    @game_room.update(current_issue_id: nil) if @game_room.current_issue_id == @issue.id
+
     respond_to do |format|
       format.html { redirect_to game_room_issues_url(@game_room), notice: "Issue was successfully destroyed." }
       format.json { head :no_content }
+    end
+  end
+
+  def set_current_issue
+    issue = Issue.find(params[:issue_id])
+    @game_room.current_issue = issue
+
+    respond_to do |format|
+      if @game_room.save!
+        format.html { redirect_to game_room_url(@game_room), notice: "Issue was successfully set as current." }
+        format.json { render :show, status: :created, location: @game_room }
+      else
+        format.html { redirect_to game_room_url(@game_room), notice: "Something went wrong." }
+        format.json { render json: @game_room.errors, status: :unprocessable_entity }
+      end
     end
   end
 

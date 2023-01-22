@@ -10,12 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_22_070131) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_22_074247) do
   create_table "game_rooms", force: :cascade do |t|
     t.integer "user_id", null: false
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "current_issue_id"
+    t.index ["current_issue_id"], name: "index_game_rooms_on_current_issue_id"
     t.index ["user_id"], name: "index_game_rooms_on_user_id"
   end
 
@@ -33,6 +35,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_22_070131) do
     t.integer "story_points"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "issue_id", null: false
+    t.index ["issue_id"], name: "index_pokers_on_issue_id"
     t.index ["user_id"], name: "index_pokers_on_user_id"
   end
 
@@ -50,5 +54,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_22_070131) do
 
   add_foreign_key "game_rooms", "users"
   add_foreign_key "issues", "game_rooms"
+  add_foreign_key "pokers", "issues"
   add_foreign_key "pokers", "users"
 end

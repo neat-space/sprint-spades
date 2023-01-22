@@ -1,4 +1,4 @@
-<%= form_with(model: poker) do |form| %>
+<%= form_with(model: poker, url: [@game_room, poker]) do |form| %>
   <% if poker.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(poker.errors.count, "error") %> prohibited this poker from being saved:</h2>

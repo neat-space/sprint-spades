@@ -1,7 +1,7 @@
 <div id="<%= dom_id issue %>">
   <p>
     <strong>Title:</strong>
-    <%= issue.title %>
+    <%= issue.title %> <%= button_to "Set As Current", game_room_issue_set_current_issue_path(@game_room, issue), method: :post %>
   </p>
 
   <p>

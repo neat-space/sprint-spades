@@ -5,6 +5,6 @@
 <br>
 
 <div>
-  <%= link_to "Show this poker", @poker %> |
-  <%= link_to "Back to pokers", pokers_path %>
+  <%= link_to "Show this poker", game_room_poker_path(@game_room, @poker) %> |
+  <%= link_to "Back to pokers", game_room_pokers_path(@game_room) %>
 </div>
