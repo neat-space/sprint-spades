@@ -5,7 +5,7 @@ class GameRoom < ApplicationRecord
   has_many :issues, dependent: :destroy
   has_many :pokers, through: :issues, dependent: :destroy
   has_many :game_room_users, dependent: :destroy
-  has_many :game_rooms, through: :game_room_users
+  has_many :users, through: :game_room_users
 
   after_create_commit :create_game_room_user
 

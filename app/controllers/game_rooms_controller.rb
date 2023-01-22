@@ -21,7 +21,7 @@ class GameRoomsController < ApplicationController
 
   # POST /game_rooms or /game_rooms.json
   def create
-    @game_room = current_user.game_rooms.new(game_room_params)
+    @game_room = current_user.created_game_rooms.new(game_room_params)
 
     respond_to do |format|
       if @game_room.save

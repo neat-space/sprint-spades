@@ -5,10 +5,12 @@
     <th>Status</th>
   </thead>
   <tbody>
-    <tr>
-      <th scope="row">3</th>
-      <td class="table-active">Larry the Bird</td>
-      <td>@twitter</td>
-    </tr>
+    <% game_room.users.each_with_index do |user, i| %>
+      <tr>
+        <th scope="row"><%= i + 1 %></th>
+        <td class="table-active"><%= user.email %></td>
+        <td>Action</td>
+      </tr>
+    <% end %>
   </tbody>
 </table>
