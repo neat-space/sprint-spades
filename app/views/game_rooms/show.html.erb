@@ -1,6 +1,9 @@
-<p style="color: green"><%= notice %></p>
 
 <%= render @game_room %>
+
+<h2>Issues</h2>
+<p><%= link_to "Create a new Issue", new_game_room_issue_path(@game_room) %></p>
+<%= render @game_room.issues %>
 
 <div>
   <%= link_to "Edit this game room", edit_game_room_path(@game_room) %> |
