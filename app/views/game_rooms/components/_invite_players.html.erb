@@ -1,0 +1,23 @@
+<div class="modal fade" id="invitationModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Invite Players</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" data-controller="clipboard">
+        <div class="mb-3">
+          <input type="email" data-clipboard-target="input" class="form-control" value="<%= generate_invitation_url(game_room) %>" readonly>
+        </div>
+        <div class="d-grid gap-2">
+          <button class="btn btn-primary" data-action="clipboard#copy" type="button">Copy Invitation Link</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#invitationModal">
+  + Invite Players
+</button>

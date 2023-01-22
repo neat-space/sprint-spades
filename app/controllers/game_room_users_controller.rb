@@ -1,4 +1,4 @@
-class GameRoomsController < ApplicationController
+class GameRoomUsersController < ApplicationController
   # POST /game_rooms/join
   def create
     @game_room = GameRoom.find_by(token: params[:token])
@@ -6,7 +6,7 @@ class GameRoomsController < ApplicationController
     respond_to do |format|
       if @game_room
         GameRoomUser.create!(game_room: @game_room, user: current_user)
-        format.html { redirect_to game_room_url(@game_room), notice: "Game room was successfully created." }
+        format.html { redirect_to game_room_url(@game_room), notice: "Invitation successfully accepted!." }
         format.json { render :show, status: :created, location: @game_room }
       else
         format.html { redirect_to root_url, alert: "Invalid URL." }
