@@ -27,11 +27,10 @@ class PokersController < ApplicationController
 
     respond_to do |format|
       if @poker.save
-        format.html { redirect_to game_room_poker_url(@game_room, @poker), notice: "Poker was successfully created." }
+        format.html { redirect_to game_room_url(@game_room), notice: "You have successfully voted." }
         format.json { render :show, status: :created, location: @poker }
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @poker.errors, status: :unprocessable_entity }
+        format.turbo_stream
       end
     end
   end
@@ -40,11 +39,10 @@ class PokersController < ApplicationController
   def update
     respond_to do |format|
       if @poker.update(poker_params)
-        format.html { redirect_to game_room_poker_url(@game_room, @poker), notice: "Poker was successfully updated." }
+        format.html { redirect_to game_room_url(@game_room), notice: "Your vote was successfully updated." }
         format.json { render :show, status: :ok, location: @poker }
       else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @poker.errors, status: :unprocessable_entity }
+        format.turbo_stream
       end
     end
   end

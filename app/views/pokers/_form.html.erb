@@ -1,21 +1,13 @@
-<%= form_with(model: poker, url: [@game_room, poker]) do |form| %>
-  <% if poker.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(poker.errors.count, "error") %> prohibited this poker from being saved:</h2>
+<%= turbo_frame_tag "poker-form", data: { controller: "turbo-frame", action: "turbo:submit-end -> turbo-frame#resetSrc" } do %>
+  <% url = poker.persisted? ? game_room_poker_path(@game_room, poker) : game_room_pokers_path(@game_room) %>
+  <%= simple_form_for(poker, url: url, id: dom_id(poker), data: { turbo_frame: "_top" }) do |form| %>
+    <div class="modal-body">
+      <%= form.input :story_points %>
+    </div>
 
-      <ul>
-        <% poker.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+    <div class="modal-footer">
+      <%= form.submit class: 'btn btn-primary', data: { turbo_frame: "_top", disable_with: false } %>
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
     </div>
   <% end %>
-  <div>
-    <%= form.label :story_points, style: "display: block" %>
-    <%= form.number_field :story_points %>
-  </div>
-
-  <div>
-    <%= form.submit %>
-  </div>
 <% end %>

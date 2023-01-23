@@ -9,4 +9,8 @@ class User < ApplicationRecord
   has_many :game_room_users, dependent: :destroy
   has_many :game_rooms, through: :game_room_users
   has_many :created_game_rooms, class_name: "GameRoom", foreign_key: 'user_id'
+
+  def has_already_voted?(issue)
+    pokers.pluck(:issue_id).include?(issue.id)
+  end
 end

@@ -1,0 +1,22 @@
+<div class="modal fade" id="voteModal" tabindex="-1" aria-labelledby="voteModal" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="voteModal">Vote for <%= issue.title %></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <% if poker.persisted? %>
+          <%= render 'pokers/form', poker: poker %>
+        <% else %>
+          <%= render 'pokers/form', poker: poker %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#voteModal">
+  Vote
+</button>
