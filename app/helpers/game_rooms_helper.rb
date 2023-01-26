@@ -6,6 +6,8 @@ module GameRoomsHelper
   end
 
   def player_action(user, issue)
+    return if issue.nil?
+
     if user.id == current_user.id
       render_voting_action(user, issue)
     else

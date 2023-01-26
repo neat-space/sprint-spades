@@ -1,10 +1,12 @@
-<% if current_issue %>
-  <div class="card mb-5">
-    <div class="card-header text-center">
-      <h3><%= current_issue&.title %></h3>
+<%= turbo_frame_tag game_room, "current_issue" do %>
+  <% if current_issue %>
+    <div class="card mb-5">
+      <div class="card-header text-center">
+        <h3><%= current_issue&.title %></h3>
+      </div>
+      <div class="card-body">
+        <p><%= current_issue.description %></p>
+      </div>
     </div>
-    <div class="card-body">
-      <p><%= current_issue.description %></p>
-    </div>
-  </div>
+  <% end %>
 <% end %>
