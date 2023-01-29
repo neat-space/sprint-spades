@@ -18,11 +18,11 @@ class Issue < ApplicationRecord
   end
 
   def broadcast_issue_update
-    broadcast_update_to game_room, "issues", partial: "issues/issue", locals: { game_room: game_room, issue: self }
+    broadcast_update_to game_room, partial: "issues/issue", locals: { game_room: game_room, issue: self }
   end
 
   def broadcast_issue_destroy
-    broadcast_remove_to game_room, "issues", target: dom_id(self)
+    broadcast_remove_to game_room, target: dom_id(self)
   end
 
   def set_next_issue_as_current_issue
