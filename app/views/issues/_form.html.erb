@@ -1,26 +1,7 @@
-<%= form_with(model: issue, url: [@game_room, issue]) do |form| %>
-  <% if issue.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(issue.errors.count, "error") %> prohibited this issue from being saved:</h2>
-
-      <ul>
-        <% issue.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
+<%= turbo_frame_tag "issue-form-#{dom_id(issue)}", data: { controller: "turbo-frame", action: "turbo:submit-end -> turbo-frame#resetSrc" } do %>
+  <%= simple_form_for issue, url: [game_room, issue], id: dom_id(issue), data: { turbo_frame: "_top" } do |form| %>
+    <%= form.input :title %>
+    <%= form.input :description %>
+    <%= form.button :submit, class: "btn btn-primary mt-2" %>
   <% end %>
-
-  <div>
-    <%= form.label :title, style: "display: block" %>
-    <%= form.text_field :title %>
-  </div>
-
-  <div>
-    <%= form.label :description, style: "display: block" %>
-    <%= form.text_field :description %>
-  </div>
-  <div>
-    <%= form.submit %>
-  </div>
 <% end %>

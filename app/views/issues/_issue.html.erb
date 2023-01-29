@@ -1,8 +1,21 @@
 <%= turbo_frame_tag dom_id(issue) do %>
+  <%= render "game_rooms/components/edit_issue", { game_room: game_room, issue: issue } %>
   <li class="list-group-item d-flex justify-content-between align-items-start <%= issue_active?(game_room, issue) %>">
     <div class="ms-2 me-auto">
       <div class="fw-bold"><%= issue.title %></div>
       <%= issue.description %>
     </div>
+     <div class="dropdown dropdown-issue float-end">
+        <%= link(link_style: 'link-info', data: { bs_toggle: 'dropdown'}, content: icon('fa fa-ellipsis-h')) %>
+        
+        <ul class="dropdown-menu">
+          <li>
+            <%= link(link_style: 'dropdown-item', content: "Edit", data: { bs_toggle: "modal", bs_target: "#edit-modal-#{dom_id(issue)}"}) %>
+          </li>
+          <li>
+            <%= button_to "Delete", game_room_issue_path(game_room, issue), method: :delete, class: "dropdown-item", form: { data: { turbo_confirm: "Are you sure you want to delete this issue?" } } %>
+          </li>
+        </ul>
+      </div>
   </li>
 <% end %>

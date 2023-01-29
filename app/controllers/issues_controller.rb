@@ -1,4 +1,6 @@
 class IssuesController < ApplicationController
+  include ActionView::RecordIdentifier
+
   before_action :set_issue, only: %i[ show edit update destroy]
   before_action :set_game_room
 
@@ -29,7 +31,9 @@ class IssuesController < ApplicationController
         format.html { redirect_to game_room_url(@game_room), notice: "Issue was successfully created." }
         format.json { render :show, status: :created, location: @issue }
       else
-        format.html { render :new, status: :unprocessable_entity }
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace("issue-form-#{dom_id(@issue)}", partial: "issues/form", locals: { game_room: @game_room, issue: @issue })
+        end
         format.json { render json: @issue.errors, status: :unprocessable_entity }
       end
     end
@@ -39,10 +43,12 @@ class IssuesController < ApplicationController
   def update
     respond_to do |format|
       if @issue.update(issue_params)
-        format.html { redirect_to game_room_issue_url(@game_room, @issue), notice: "Issue was successfully updated." }
+        format.html { redirect_to game_room_url(@game_room), notice: "Issue was successfully updated." }
         format.json { render :show, status: :ok, location: @issue }
       else
-        format.html { render :edit, status: :unprocessable_entity }
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace("issue-form-#{dom_id(@issue)}", partial: "issues/form", locals: { game_room: @game_room, issue: @issue })
+        end
         format.json { render json: @issue.errors, status: :unprocessable_entity }
       end
     end
@@ -52,10 +58,8 @@ class IssuesController < ApplicationController
   def destroy
     @issue.destroy
 
-    @game_room.update(current_issue_id: nil) if @game_room.current_issue_id == @issue.id
-
     respond_to do |format|
-      format.html { redirect_to game_room_issues_url(@game_room), notice: "Issue was successfully destroyed." }
+      format.html { redirect_to game_room_url(@game_room), notice: "Issue was successfully destroyed." }
       format.json { head :no_content }
     end
   end

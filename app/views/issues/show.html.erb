@@ -1,6 +1,6 @@
 <p style="color: green"><%= notice %></p>
 
-<%= render @issue %>
+<%= render @issue, { game_room: @game_room } %>
 
 <div>
   <%= link_to "Edit this issue", edit_game_room_issue_path(@game_room, @issue) %> |

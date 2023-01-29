@@ -12,7 +12,7 @@
           <% end %>
         <% end %>
         <li class="list-group-item">
-          <%= link_to "+ New Issue", new_game_room_issue_path(game_room), class: 'btn btn-btn-primary btn-outline-primary' %>
+          <%= render 'game_rooms/components/new_issue', { game_room: game_room } %>
         </li>
       </ul>
     </div>

@@ -1,0 +1,19 @@
+<div class="modal fade" id="newIssueModal" tabindex="-1" aria-labelledby="newIssueModal" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="newIssueModalLabel">New Issue</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" data-controller="clipboard">
+        <%= render 'issues/form', { game_room: game_room, issue: game_room.issues.new } %>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#newIssueModal">
+  + Invite Players
+</button>
