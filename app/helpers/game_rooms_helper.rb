@@ -8,28 +8,18 @@ module GameRoomsHelper
   def player_action(user, issue)
     return if issue.nil?
 
-    if user.id == current_user.id
-      render_voting_action(user, issue)
+    if user.has_already_voted?(issue)
+      "Voted"
     else
-      render_voting_status(user, issue)
+      "Not voted yet"
     end
   end
-
-  private
   
-    def render_voting_action(user, issue)
-      if user.has_already_voted?(issue)
-        render "pokers/components/vote", poker: Poker.find_by(issue: issue, user: user), issue: issue, user: user
-      else
-        render "pokers/components/vote", poker: Poker.new(issue: issue, user: user), issue: issue, user: user
-      end
+  def display_vote_text(issue)
+    if current_user.has_already_voted?(issue)
+      "Update your vote"
+    else
+      "Vote"
     end
-    
-    def render_voting_status(user, issue)
-      if user.has_already_voted?(issue)
-        "Voted"
-      else
-        "Not voted yet"
-      end
-    end
+  end
 end

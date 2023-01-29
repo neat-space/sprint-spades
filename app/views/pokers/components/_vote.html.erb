@@ -1,22 +1,32 @@
-<div class="modal fade" id="voteModal" tabindex="-1" aria-labelledby="voteModal" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="voteModal">Vote for <%= issue.title %></h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <% if poker.persisted? %>
-          <%= render 'pokers/form', poker: poker %>
-        <% else %>
-          <%= render 'pokers/form', poker: poker %>
-        <% end %>
+<% if issue.present? %>
+  <div class="modal fade" id="voteModal" tabindex="-1" aria-labelledby="voteModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="voteModal">Vote for <%= issue.title %></h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <% if poker.persisted? %>
+            <%= render 'pokers/form', poker: poker, game_room: issue.game_room %>
+          <% else %>
+            <%= render 'pokers/form', poker: poker, game_room: issue.game_room %>
+          <% end %>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#voteModal">
-  Vote
-</button>
+  <% if poker.persisted? %>
+    <%= button_to "Clear your vote", game_room_poker_path(issue.game_room, poker), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-outline-danger ml-2", style: "float: right;" %>
+  <% end %>
+
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-outline-primary" style="float: right; margin-right: 1em;" data-bs-toggle="modal" data-bs-target="#voteModal">
+    <%= display_vote_text(issue) %>
+  </button>
+
+  <% if issue.pokers.present? %>
+    <%= link_to "Reveal Votes", game_room_path(issue.game_room), method: :post, class: "btn btn-outline-primary", style: "float: right; margin-right: 1em;" %>
+  <% end %>
+<% end %>

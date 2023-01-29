@@ -27,7 +27,7 @@ class PokersController < ApplicationController
 
     respond_to do |format|
       if @poker.save
-        format.html { redirect_to game_room_url(@game_room), notice: "You have successfully voted." }
+        format.html { redirect_to game_room_path(@game_room), notice: "You have successfully voted." }
         format.json { render :show, status: :created, location: @poker }
       else
         format.turbo_stream
@@ -39,7 +39,7 @@ class PokersController < ApplicationController
   def update
     respond_to do |format|
       if @poker.update(poker_params)
-        format.html { redirect_to game_room_url(@game_room), notice: "Your vote was successfully updated." }
+        format.html { redirect_to game_room_path(@game_room), notice: "Vote updated!" }
         format.json { render :show, status: :ok, location: @poker }
       else
         format.turbo_stream
@@ -52,7 +52,7 @@ class PokersController < ApplicationController
     @poker.destroy
 
     respond_to do |format|
-      format.html { redirect_to game_room_pokers_url(@game_room), notice: "Poker was successfully destroyed." }
+      format.html { redirect_to game_room_path(@game_room), notice: "Cleared your vote!" }
       format.json { head :no_content }
     end
   end

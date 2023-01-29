@@ -2,6 +2,7 @@
   <div class="col-9">
     <%= render 'game_rooms/components/current_issue', game_room: game_room, current_issue: game_room.current_issue %>
     <%= render "game_rooms/components/invite_players", game_room: game_room %>
+    <%= render "pokers/components/vote", poker: Poker.find_or_initialize_by(issue: game_room.current_issue, user: current_user), issue: game_room.current_issue %>
     <%= render "game_rooms/components/player_table", game_room: game_room, issue: game_room.current_issue %>
   </div>
   <div class="col-3">

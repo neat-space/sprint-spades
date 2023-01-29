@@ -1,5 +1,5 @@
 <%= turbo_frame_tag "poker-form", data: { controller: "turbo-frame", action: "turbo:submit-end -> turbo-frame#resetSrc" } do %>
-  <% url = poker.persisted? ? game_room_poker_path(@game_room, poker) : game_room_pokers_path(@game_room) %>
+  <% url = poker.persisted? ? game_room_poker_path(game_room, poker) : game_room_pokers_path(game_room) %>
   <%= simple_form_for(poker, url: url, id: dom_id(poker), data: { turbo_frame: "_top" }) do |form| %>
     <div class="modal-body">
       <%= form.input :story_points %>
