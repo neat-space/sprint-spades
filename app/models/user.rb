@@ -13,4 +13,8 @@ class User < ApplicationRecord
   def has_already_voted?(issue)
     pokers.pluck(:issue_id).include?(issue.id)
   end
+
+  def points_for(issue)
+    pokers.find_by(issue: issue)&.story_points
+  end
 end

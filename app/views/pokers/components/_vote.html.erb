@@ -17,16 +17,21 @@
     </div>
   </div>
 
-  <% if poker.persisted? %>
-    <%= button_to "Clear your vote", game_room_poker_path(issue.game_room, poker), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-outline-danger ml-2", style: "float: right;" %>
-  <% end %>
+  <%= turbo_frame_tag "vote_actions" do %>
+    <% if issue.points_revealed_at %>
+      <%= render "pokers/components/revealed_points", issue: issue %>
+    <% else %>
+      <% if poker.persisted? %>
+        <%= button_to "Clear your vote", game_room_poker_path(issue.game_room, poker), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-outline-danger ml-2", style: "float: right;" %>
+      <% end %>
 
-  <!-- Button trigger modal -->
-  <button type="button" class="btn btn-outline-primary" style="float: right; margin-right: 1em;" data-bs-toggle="modal" data-bs-target="#voteModal">
-    <%= display_vote_text(issue) %>
-  </button>
+      <button type="button" class="btn btn-outline-primary" style="float: right; margin-right: 1em;" data-bs-toggle="modal" data-bs-target="#voteModal">
+        <%= display_vote_text(issue) %>
+      </button>
 
-  <% if issue.pokers.present? %>
-    <%= link_to "Reveal Votes", game_room_path(issue.game_room), method: :post, class: "btn btn-outline-primary", style: "float: right; margin-right: 1em;" %>
+      <% if issue.pokers.present? %>
+        <%= button_to "Reveal Votes", game_room_issue_reveal_votes_path(issue.game_room, issue), method: :put, class: "btn btn-outline-primary", style: "float: right; margin-right: 1em;" %>
+      <% end %>
+    <% end %>
   <% end %>
 <% end %>

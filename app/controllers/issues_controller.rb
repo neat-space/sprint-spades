@@ -79,6 +79,16 @@ class IssuesController < ApplicationController
     end
   end
 
+  def reveal_votes
+    issue = Issue.find(params[:issue_id])
+    issue.update!(points_revealed_at: Time.current)
+
+    respond_to do |format|
+      format.html { redirect_to game_room_url(@game_room), notice: "Points revealed!" }
+      format.json { head :no_content }
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_issue

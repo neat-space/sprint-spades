@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_22_133706) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_29_160416) do
   create_table "game_room_users", force: :cascade do |t|
     t.integer "game_room_id", null: false
     t.integer "user_id", null: false
@@ -38,6 +38,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_22_133706) do
     t.integer "game_room_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "points_revealed_at"
     t.index ["game_room_id"], name: "index_issues_on_game_room_id"
   end
 
