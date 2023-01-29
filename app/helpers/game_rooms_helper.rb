@@ -1,6 +1,4 @@
 module GameRoomsHelper
-  include Rails.application.routes.url_helpers
-
   def generate_invitation_url(game_room)
     "#{root_url.gsub(/\/$/, '')}/game_rooms/join/#{game_room.token}"
   end
@@ -14,7 +12,7 @@ module GameRoomsHelper
       "Not voted yet"
     end
   end
-  
+
   def display_vote_text(issue)
     if current_user.has_already_voted?(issue)
       "Update your vote"
