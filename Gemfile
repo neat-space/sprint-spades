@@ -76,3 +76,6 @@ gem "devise", "~> 4.8"
 gem "bootstrap", "~> 5.2"
 
 gem "simple_form", "~> 5.1"
+
+gem "omniauth-google-oauth2", "~> 1.1"
+gem "omniauth-rails_csrf_protection", "~> 1.0"
