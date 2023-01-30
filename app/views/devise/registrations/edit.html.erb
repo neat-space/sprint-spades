@@ -3,7 +3,9 @@
     <h2>Edit <%= resource_name.to_s.humanize %></h2>
     <%= f.error_notification %>
 
-    <%= f.input :email, required: true, autofocus: true %>
+    <%= f.input :first_name, required: true, autofocus: true %>
+    <%= f.input :last_name, required: true %>
+    <%= f.input :email, required: true %>
 
     <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
       <p>Currently waiting confirmation for: <%= resource.unconfirmed_email %></p>

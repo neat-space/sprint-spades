@@ -9,7 +9,7 @@
       <% game_room.users.each_with_index do |user, i| %>
         <tr>
           <th scope="row"><%= i + 1 %></th>
-          <td class="table-active"><%= user.email %></td>
+          <td class="table-active"><%= user.name || user.email %></td>
           <td><%= player_status(user, issue) %></td>
         </tr>
       <% end %>

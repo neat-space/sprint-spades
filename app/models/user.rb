@@ -10,6 +10,14 @@ class User < ApplicationRecord
   has_many :game_rooms, through: :game_room_users
   has_many :created_game_rooms, class_name: "GameRoom", foreign_key: 'user_id'
 
+  validates :first_name, :last_name, presence: true
+
+  def name
+    return unless self.first_name
+
+    @name ||= "#{self.first_name} #{self.last_name}"
+  end
+
   def has_already_voted?(issue)
     pokers.pluck(:issue_id).include?(issue.id)
   end
