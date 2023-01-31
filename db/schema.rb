@@ -11,9 +11,12 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.0].define(version: 2023_01_30_145303) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "game_room_users", force: :cascade do |t|
-    t.integer "game_room_id", null: false
-    t.integer "user_id", null: false
+    t.bigint "game_room_id", null: false
+    t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["game_room_id", "user_id"], name: "index_game_room_users_on_game_room_id_and_user_id", unique: true
@@ -22,7 +25,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_30_145303) do
   end
 
   create_table "game_rooms", force: :cascade do |t|
-    t.integer "user_id", null: false
+    t.bigint "user_id", null: false
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -35,7 +38,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_30_145303) do
   create_table "identities", force: :cascade do |t|
     t.string "provider"
     t.string "uid"
-    t.integer "user_id", null: false
+    t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_identities_on_user_id"
@@ -44,7 +47,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_30_145303) do
   create_table "issues", force: :cascade do |t|
     t.string "title"
     t.string "description"
-    t.integer "game_room_id", null: false
+    t.bigint "game_room_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "points_revealed_at"
@@ -52,11 +55,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_30_145303) do
   end
 
   create_table "pokers", force: :cascade do |t|
-    t.integer "user_id", null: false
+    t.bigint "user_id", null: false
     t.integer "story_points"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "issue_id", null: false
+    t.bigint "issue_id", null: false
     t.index ["issue_id"], name: "index_pokers_on_issue_id"
     t.index ["user_id", "issue_id"], name: "index_pokers_on_user_id_and_issue_id", unique: true
     t.index ["user_id"], name: "index_pokers_on_user_id"
