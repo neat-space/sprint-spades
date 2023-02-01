@@ -1,25 +1,20 @@
 class GameRoomsController < ApplicationController
   before_action :set_game_room, only: %i[ show edit update destroy ]
 
-  # GET /game_rooms or /game_rooms.json
   def index
-    @game_rooms = current_user.game_rooms.all
+    @game_rooms = policy_scope(GameRoom)
   end
 
-  # GET /game_rooms/1 or /game_rooms/1.json
   def show
   end
 
-  # GET /game_rooms/new
   def new
     @game_room = GameRoom.new
   end
 
-  # GET /game_rooms/1/edit
   def edit
   end
 
-  # POST /game_rooms or /game_rooms.json
   def create
     @game_room = current_user.created_game_rooms.new(game_room_params)
 
@@ -61,6 +56,7 @@ class GameRoomsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_game_room
       @game_room = GameRoom.find(params[:id])
+      authorize @game_room
     end
 
     # Only allow a list of trusted parameters through.
