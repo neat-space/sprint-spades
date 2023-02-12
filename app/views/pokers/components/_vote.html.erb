@@ -1,23 +1,23 @@
-<% if issue.present? %>
-  <div class="modal fade" id="voteModal" tabindex="-1" aria-labelledby="voteModal" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="voteModal">Vote for <%= issue.title %></h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <% if poker.persisted? %>
-            <%= render 'pokers/form', poker: poker, game_room: issue.game_room %>
-          <% else %>
-            <%= render 'pokers/form', poker: poker, game_room: issue.game_room %>
-          <% end %>
+<%= turbo_frame_tag "vote_actions" do %>
+  <% if issue.present? %>
+    <div class="modal fade" id="voteModal" tabindex="-1" aria-labelledby="voteModal" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="voteModal">Vote for <%= issue.title %></h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <% if poker.persisted? %>
+              <%= render 'pokers/form', poker: poker, game_room: issue.game_room %>
+            <% else %>
+              <%= render 'pokers/form', poker: poker, game_room: issue.game_room %>
+            <% end %>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <%= turbo_frame_tag "vote_actions" do %>
     <% if issue.points_revealed_at %>
       <%= render "pokers/components/revealed_points", issue: issue %>
     <% else %>

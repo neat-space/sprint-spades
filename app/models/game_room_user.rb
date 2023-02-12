@@ -9,6 +9,9 @@ class GameRoomUser < ApplicationRecord
   private
 
     def broadcast_create
-      broadcast_replace_to game_room, Current.user, target: "player_table", partial: 'game_rooms/components/player_table', locals: { game_room:, user:, issue: game_room.current_issue}
+      game_room.users.each do |user|
+        Current.user = user
+        broadcast_replace_to game_room, Current.user, target: "player_table", partial: 'game_rooms/components/player_table', locals: { game_room:, user:, issue: game_room.current_issue}
+      end
     end
 end

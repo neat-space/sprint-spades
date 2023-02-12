@@ -26,7 +26,10 @@ class Issue < ApplicationRecord
   end
 
   def broadcast_issue_destroy
-    broadcast_remove_to game_room, Current.user, target: dom_id(self)
+    game_room.users.each do |user|
+      Current.user = user
+      broadcast_remove_to game_room, Current.user, target: dom_id(self)
+    end
   end
 
   def set_next_issue_as_current_issue
@@ -38,7 +41,11 @@ class Issue < ApplicationRecord
   def broadcast_entire_room
     return unless points_revealed_at
 
-    broadcast_update_to game_room, Current.user, target: "vote_actions", partial: "pokers/components/revealed_points", locals: { issue: self }
-    broadcast_update_to game_room, Current.user, target: "player_table", partial: "game_rooms/components/player_table", locals: { game_room: game_room }
+    game_room.users.each do |user|
+      Current.user = user
+
+      broadcast_update_to game_room, Current.user, target: "vote_actions", partial: "pokers/components/revealed_points", locals: { issue: self }
+      broadcast_update_to game_room, Current.user, target: "player_table", partial: "game_rooms/components/player_table", locals: { game_room: game_room }
+    end
   end
 end
