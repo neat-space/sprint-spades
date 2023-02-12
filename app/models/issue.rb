@@ -19,7 +19,12 @@ class Issue < ApplicationRecord
   end
 
   def broadcast_issue_update
-    broadcast_update_to game_room, partial: "issues/issue", locals: { game_room: game_room, issue: self }
+    game_room.users.each do |user|
+      next if user == Current.user
+
+      Current.user = user
+      broadcast_update_to game_room, partial: "issues/issue", locals: { game_room: game_room, issue: self }
+    end
   end
 
   def broadcast_issue_destroy
@@ -35,7 +40,7 @@ class Issue < ApplicationRecord
   def broadcast_entire_room
     return unless points_revealed_at
 
-    broadcast_replace_to game_room, target: "vote_actions", partial: "pokers/components/revealed_points", locals: { issue: self }
-    broadcast_replace_to game_room, target: "player_table", partial: "game_rooms/components/player_table", locals: { game_room: game_room }
+    broadcast_update_to game_room, target: "vote_actions", partial: "pokers/components/revealed_points", locals: { issue: self }
+    broadcast_update_to game_room, target: "player_table", partial: "game_rooms/components/player_table", locals: { game_room: game_room }
   end
 end

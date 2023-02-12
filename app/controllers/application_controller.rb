@@ -1,6 +1,11 @@
 class ApplicationController < ActionController::Base
   include DeviseWhitelist
   include Pundit::Authorization
-  
-  before_action :authenticate_user!
+  include CurrentUserConcern
+
+  private
+    
+    def pundit_user
+      Current.user
+    end
 end

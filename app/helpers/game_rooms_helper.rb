@@ -14,7 +14,7 @@ module GameRoomsHelper
   end
 
   def display_vote_text(issue)
-    if current_user.has_already_voted?(issue)
+    if Current.user.has_already_voted?(issue)
       "Update your vote"
     else
       "Vote"

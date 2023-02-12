@@ -11,7 +11,7 @@
           <% end %>
         <% end %>
         <li class="list-group-item">
-          <%= render 'game_rooms/components/new_issue', { game_room: game_room } %>
+          <%= render 'game_rooms/components/new_issue', { game_room: game_room } if policy(game_room.issues.new).create? %>
         </li>
       </ul>
     </div>

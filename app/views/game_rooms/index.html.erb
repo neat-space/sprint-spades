@@ -16,8 +16,8 @@
           <div class="card-body">
             <h5 class="card-title"><%= game_room.name %></h5>
             <%= link_to 'Show', game_room, class: 'btn btn-primary' %>
-            <%= link_to 'Edit', edit_game_room_path(game_room), class: 'btn btn-secondary' %>
-            <%= link_to 'Delete', game_room, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+            <%= link_to 'Edit', edit_game_room_path(game_room), class: 'btn btn-secondary' if policy(game_room).edit? %>
+            <%= link_to 'Delete', game_room, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' if policy(game_room).destroy? %>
           </div>
         </div>
       </div>
