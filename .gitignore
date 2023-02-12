@@ -37,3 +37,4 @@
 /config/credentials/development.key
 
 .vscode
+/config/credentials/production.key
