@@ -6,7 +6,7 @@ Rails.application.routes.draw do
 
   resources :game_rooms do
     resources :issues do
-      post :set_current_issue
+      put :set_current_issue
       put :reveal_votes
     end
     resources :pokers

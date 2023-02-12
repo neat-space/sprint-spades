@@ -9,6 +9,6 @@ class GameRoomUser < ApplicationRecord
   private
 
     def broadcast_create
-      broadcast_replace_to game_room, target: "player_table", partial: 'game_rooms/components/player_table', locals: { game_room:, user:, issue: game_room.current_issue}
+      broadcast_replace_to game_room, Current.user, target: "player_table", partial: 'game_rooms/components/player_table', locals: { game_room:, user:, issue: game_room.current_issue}
     end
 end

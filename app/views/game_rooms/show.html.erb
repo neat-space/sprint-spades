@@ -1,5 +1,5 @@
 <div class="container-fluid mt-5">
-    <%= turbo_stream_from @game_room %>
+    <%= turbo_stream_from @game_room, Current.user %>
     <%= turbo_frame_tag dom_id(@game_room) do %>
       <%= render @game_room %>
     <% end %>

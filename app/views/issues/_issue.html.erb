@@ -11,6 +11,9 @@
         
         <ul class="dropdown-menu">
           <li>
+            <%= button_to "Set as Current", game_room_issue_set_current_issue_path(game_room, issue), method: :put, class: "dropdown-item" if game_room.current_issue != issue %>
+          </li>
+          <li>
             <%= link(link_style: 'dropdown-item', content: "Edit", data: { bs_toggle: "modal", bs_target: "#edit-modal-#{dom_id(issue)}"}) %>
           </li>
           <li>

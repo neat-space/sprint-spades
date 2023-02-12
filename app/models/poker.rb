@@ -10,6 +10,6 @@ class Poker < ApplicationRecord
   private
 
     def broadcast_to_player_table
-      broadcast_replace_to issue.game_room, target: "player_table", partial: "game_rooms/components/player_table", locals: { game_room: issue.game_room, issue: issue }
+      broadcast_replace_to issue.game_room, Current.user, target: "player_table", partial: "game_rooms/components/player_table", locals: { game_room: issue.game_room, issue: issue }
     end
 end

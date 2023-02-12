@@ -31,13 +31,11 @@ class GameRoom < ApplicationRecord
 
     def broadcast_current_issue
       users.each do |user|
-        next if user == Current.user
-
         Current.user = user
-        broadcast_update_to self, target: "game_room_#{id}_issues", partial: 'game_rooms/components/issues', locals: { game_room: self, issues: issues }
-        broadcast_update_to self, target: "game_room_#{id}_current_issue", partial: 'game_rooms/components/current_issue', locals: { game_room: self, current_issue: current_issue }
-        broadcast_update_to self, target: "player_table", partial: 'game_rooms/components/player_table', locals: { game_room: self, user: user, issue: current_issue }
-        broadcast_update_to self, target: "vote_actions", partial: "pokers/components/vote", locals: { issue: current_issue, poker: Poker.find_or_initialize_by(issue: current_issue, user: user) }
+        broadcast_update_to self, Current.user, target: "game_room_#{id}_issues", partial: 'game_rooms/components/issues', locals: { game_room: self, issues: issues }
+        broadcast_update_to self, Current.user, target: "game_room_#{id}_current_issue", partial: 'game_rooms/components/current_issue', locals: { game_room: self, current_issue: current_issue }
+        broadcast_update_to self, Current.user, target: "player_table", partial: 'game_rooms/components/player_table', locals: { game_room: self, user: user, issue: current_issue }
+        broadcast_update_to self, Current.user, target: "vote_actions", partial: "pokers/components/vote", locals: { issue: current_issue, poker: Poker.find_or_initialize_by(issue: current_issue, user: user) }
       end
     end
 end
