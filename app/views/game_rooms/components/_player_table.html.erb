@@ -4,13 +4,15 @@
       <th>#</th>
       <th>Player</th>
       <th>Status</th>
+      <th>Actions</th>
     </thead>
     <tbody>
-      <% game_room.users.each_with_index do |user, i| %>
+      <% game_room.game_room_users.includes(:user).each_with_index do |game_room_user, i| %>
         <tr>
           <th scope="row"><%= i + 1 %></th>
-          <td class="table-active"><%= user.name || user.email %></td>
-          <td><%= player_status(user, issue) %></td>
+          <td class="table-active"><%= game_room_user.name || game_room_user.email %></td>
+          <td><%= player_status(game_room_user.user, issue) %></td>
+          <td><%= remove_game_room_user(game_room_user, policy(game_room_user).destroy?) %></td>
         </tr>
       <% end %>
     </tbody>

@@ -10,6 +10,7 @@ Rails.application.routes.draw do
       put :reveal_votes
     end
     resources :pokers
+    resources :game_room_users, only: [:destroy]
   end
 
   get '/game_rooms/join/:token', to: 'game_room_users#create'
