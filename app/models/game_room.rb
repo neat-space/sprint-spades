@@ -1,4 +1,6 @@
 class GameRoom < ApplicationRecord
+  resourcify
+  
   belongs_to :creator, class_name: "User", foreign_key: "user_id"
   belongs_to :current_issue, class_name: "Issue", optional: true
   
@@ -9,6 +11,7 @@ class GameRoom < ApplicationRecord
 
   after_create_commit :create_game_room_user
   before_create :set_token
+  after_create :set_owner_role
 
   after_update_commit :broadcast_current_issue, if: :saved_change_to_current_issue_id?
 
@@ -37,5 +40,9 @@ class GameRoom < ApplicationRecord
         broadcast_update_to self, Current.user, target: "player_table", partial: 'game_rooms/components/player_table', locals: { game_room: self, user: user, issue: current_issue }
         broadcast_update_to self, Current.user, target: "vote_actions", partial: "pokers/components/vote", locals: { issue: current_issue, poker: Poker.find_or_initialize_by(issue: current_issue, user: user) }
       end
+    end
+
+    def set_owner_role
+      creator.add_role(:owner, self)
     end
 end

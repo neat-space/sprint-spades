@@ -1,21 +1,27 @@
 class IssuePolicy < ApplicationPolicy
   def create?
-    record&.game_room&.creator == user
+    user_is_an_admin_or_owner?(record.game_room)
   end
 
   def update?
-    record&.game_room&.creator == user
+    user_is_an_admin_or_owner?(record.game_room)
   end
 
   def destroy?
-    record&.game_room&.creator == user
+    user_is_an_admin_or_owner?(record.game_room)
   end
 
   def reveal_votes?
-    record&.game_room&.creator == user
+    user_is_an_admin_or_owner?(record.game_room)
   end
 
   def set_current_issue?
-    record&.game_room&.creator == user
+    user_is_an_admin_or_owner?(record.game_room)
   end
+
+  private
+
+    def user_is_an_admin_or_owner?(record)
+      user.has_role?(:owner, record) || user.has_role?(:admin, record)
+    end
 end
