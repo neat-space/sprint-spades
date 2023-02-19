@@ -14,16 +14,16 @@ class User < ApplicationRecord
   validates :first_name, :last_name, presence: true
 
   def name
-    return unless self.first_name
+    return unless first_name
 
-    @name ||= "#{self.first_name} #{self.last_name}"
+    @name ||= "#{first_name} #{last_name}"
   end
 
-  def has_already_voted?(issue)
+  def already_voted?(issue)
     pokers.pluck(:issue_id).include?(issue.id)
   end
 
   def points_for(issue)
-    pokers.find_by(issue: issue)&.story_points
+    pokers.find_by(issue:)&.story_points
   end
 end
