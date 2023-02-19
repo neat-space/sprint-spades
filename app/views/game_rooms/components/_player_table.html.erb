@@ -8,9 +8,9 @@
     </thead>
     <tbody>
       <% game_room.game_room_users.includes(:user).each_with_index do |game_room_user, i| %>
-        <tr>
+        <tr class="<%= "table-light" if game_room_user.discarded? %>">
           <th scope="row"><%= i + 1 %></th>
-          <td class="table-active"><%= game_room_user.name || game_room_user.email %></td>
+          <td class=""><%= game_room_user.name || game_room_user.email %> <%= "(removed)" if game_room_user.discarded? %> </td>
           <td><%= player_status(game_room_user.user, issue) %></td>
           <td><%= remove_game_room_user(game_room_user, policy(game_room_user).destroy?) %></td>
         </tr>

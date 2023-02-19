@@ -16,7 +16,12 @@ module GameRoomsHelper
   def remove_game_room_user(game_room_user, can_destroy)
     return unless can_destroy
 
-    button_to remove_button_text(game_room_user.user), game_room_game_room_user_path(game_room_user.game_room, game_room_user), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger"
+    button_to(remove_button_text(game_room_user.user),
+              game_room_game_room_user_path(game_room_user.game_room, game_room_user),
+              method: :delete,
+              form: { data: { turbo_confirm: confirm_remove_text(game_room_user.user) } },
+              class: "btn btn-danger"
+             )
   end
 
   def display_vote_text(issue)
@@ -34,6 +39,14 @@ module GameRoomsHelper
       "Leave room"
     else
       "Remove Player"
+    end
+  end
+
+  def confirm_remove_text(user)
+    if user == Current.user
+      "Are you sure you want to leave the room?"
+    else
+      "Are you sure you want to remove this player?"
     end
   end
 end

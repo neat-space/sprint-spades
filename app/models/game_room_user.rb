@@ -1,4 +1,6 @@
 class GameRoomUser < ApplicationRecord
+  include Discard::Model
+
   belongs_to :game_room
   belongs_to :user
 
