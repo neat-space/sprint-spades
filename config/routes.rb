@@ -11,6 +11,7 @@ Rails.application.routes.draw do
     end
     resources :pokers
     resources :game_room_users, only: [:destroy]
+    resource :user_roles, only: [:create, :destroy]
   end
 
   get '/game_rooms/join/:token', to: 'game_room_users#create'
