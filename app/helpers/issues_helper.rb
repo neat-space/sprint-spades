@@ -7,6 +7,6 @@ module IssuesHelper
   def render_average_points(issue)
     return unless issue.points_revealed_at
 
-    content_tag :span, issue.pokers.average(:story_points), class: "badge bg-primary rounded-pill"
+    content_tag :span, issue.average_story_points, class: "badge bg-primary rounded-pill"
   end
 end

@@ -10,9 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_30_145303) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_19_063506) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "data_migrations", primary_key: "version", id: :string, force: :cascade do |t|
+  end
 
   create_table "game_room_users", force: :cascade do |t|
     t.bigint "game_room_id", null: false
@@ -51,12 +54,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_30_145303) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "points_revealed_at"
+    t.integer "pokers_count", default: 0, null: false
+    t.float "average_story_points", default: 0.0, null: false
     t.index ["game_room_id"], name: "index_issues_on_game_room_id"
   end
 
   create_table "pokers", force: :cascade do |t|
     t.bigint "user_id", null: false
-    t.integer "story_points"
+    t.integer "story_points", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "issue_id", null: false
