@@ -86,3 +86,5 @@ gem "pundit", "~> 2.3"
 gem "data_migrate", "~> 8.5"
 
 gem "discard", "~> 1.2"
+
+gem "rolify", "~> 6.0"

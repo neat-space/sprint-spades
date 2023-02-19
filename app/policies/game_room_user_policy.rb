@@ -4,6 +4,14 @@ class GameRoomUserPolicy < ApplicationPolicy
   end
 
   def destroy?
-    record.kept? && (user == record.game_room.creator || user.id == record.user_id)
+    record.kept? && (user.has_role?(:owner, record.game_room) || user.id == record.user_id)
+  end
+
+  def add_role?
+    record.kept? && user.has_role?(:owner, record.game_room) && user.id != record.user_id
+  end
+
+  def remove_role?
+    record.kept? && user.has_role?(:owner, record.game_room) && user.id != record.user_id
   end
 end

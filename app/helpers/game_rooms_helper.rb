@@ -13,17 +13,6 @@ module GameRoomsHelper
     end
   end
 
-  def remove_game_room_user(game_room_user, can_destroy)
-    return unless can_destroy
-
-    button_to(remove_button_text(game_room_user.user),
-              game_room_game_room_user_path(game_room_user.game_room, game_room_user),
-              method: :delete,
-              form: { data: { turbo_confirm: confirm_remove_text(game_room_user.user) } },
-              class: "btn btn-danger"
-             )
-  end
-
   def display_vote_text(issue)
     if Current.user.already_voted?(issue)
       "Update your vote"

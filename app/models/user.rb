@@ -10,9 +10,9 @@ class User < ApplicationRecord
   has_many :game_room_users, dependent: :destroy
   has_many :game_rooms, through: :game_room_users
   has_many :created_game_rooms, class_name: "GameRoom", foreign_key: 'user_id'
+  rolify after_add: :broadcast_role_update, after_remove: :broadcast_role_update
 
   validates :first_name, :last_name, presence: true
-
   def name
     return unless first_name
 
@@ -26,4 +26,24 @@ class User < ApplicationRecord
   def points_for(issue)
     pokers.find_by(issue:)&.story_points
   end
+
+  private
+
+    def broadcast_role_update(role)
+      Current.user = self
+      game_room = role.resource
+      broadcast_update_to(
+        game_room,
+        Current.user, 
+        target: "game_room", partial: 'game_rooms/game_room',
+        locals: { 
+          game_room: game_room,
+          current_issue: game_room.current_issue,
+          poker: Poker.find_or_initialize_by(issue: game_room.current_issue, user: self),
+          issue: game_room.current_issue,
+          issues: game_room.issues
+        }
+      )
+    end
+
 end
