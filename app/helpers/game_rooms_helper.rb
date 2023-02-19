@@ -5,16 +5,16 @@ module GameRoomsHelper
 
   def player_status(user, issue)
     return if issue.nil?
-    
-    if issue.points_revealed_at
-      "Voted with #{user.points_for(issue) || "0"} points"
+
+    if user.already_voted?(issue)
+      issue.points_revealed_at ? "Voted with #{user.points_for(issue)} points" : "Voted"
     else
-      user.has_already_voted?(issue) ? "Voted" : "Not voted yet"
+      issue.points_revealed_at ? "Didn't vote" : "Not voted yet"
     end
   end
 
   def display_vote_text(issue)
-    if Current.user.has_already_voted?(issue)
+    if Current.user.already_voted?(issue)
       "Update your vote"
     else
       "Vote"
