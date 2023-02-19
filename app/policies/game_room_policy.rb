@@ -21,14 +21,14 @@ class GameRoomPolicy < ApplicationPolicy
 
   class Scope < Scope
     def resolve
-      user.game_rooms.all
+      user.game_room_users.kept.map(&:game_room)
     end
   end
 
   private
 
   def game_room_users_exists?
-    record.users.include?(user)
+    record.game_room_users.kept.exists?(user_id: user.id)
   end
 
   def user_created_game_room?
