@@ -16,8 +16,6 @@
       <%= render "shared/alerts" %>
       <%= yield %>
     </div>
+    <%= turbo_frame_tag "modal", target: "_top" %>
   </main>
-
-  <body>
-  </body>
 </html>

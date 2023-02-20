@@ -1,5 +1,5 @@
 class PokersController < ApplicationController
-  before_action :set_poker, only: %i[ update destroy ]
+  before_action :set_poker, only: %i[ update destroy show]
   before_action :set_game_room
 
   def create
@@ -14,6 +14,10 @@ class PokersController < ApplicationController
         format.turbo_stream
       end
     end
+  end
+
+  def show
+    authorize @poker
   end
 
   def update
@@ -46,6 +50,6 @@ class PokersController < ApplicationController
     end
 
     def poker_params
-      params.require(:poker).permit(:story_points)
+      params.require(:poker).permit(:story_points, :remarks)
     end
 end

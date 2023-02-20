@@ -7,9 +7,20 @@ module GameRoomsHelper
     return if issue.nil?
 
     if user.already_voted?(issue)
-      issue.points_revealed_at ? "Voted with #{user.points_for(issue)} points" : "Voted"
+      if issue.points_revealed_at
+        poker = Poker.find_by(issue: issue, user: user)
+
+        if poker.remarks.present?
+          link_to "Voted with #{poker.story_points} points", game_room_poker_path(issue.game_room, poker), class: "btn btn-sm btn-outline-primary", data: { turbo_frame: "modal" }
+        else
+          tag.span("Voted with #{poker.story_points} points", class: "badge bg-success")
+        end
+      else
+        tag.span("Voted", class: "badge bg-success")
+      end
+
     else
-      issue.points_revealed_at ? "Didn't vote" : "Not voted yet"
+      issue.points_revealed_at ? tag.span("Didn't vote", class: "badge bg-secondary") : tag.span("Not voted", class: 'badge bg-secondary')
     end
   end
 
