@@ -4,13 +4,41 @@
       <th>#</th>
       <th>Player</th>
       <th>Status</th>
+      <th>Actions</th>
     </thead>
     <tbody>
-      <% game_room.users.each_with_index do |user, i| %>
-        <tr>
+      <% game_room.game_room_users.includes(:user).each_with_index do |game_room_user, i| %>
+        <tr class="<%= "table-light" if game_room_user.discarded? %>">
           <th scope="row"><%= i + 1 %></th>
-          <td class="table-active"><%= user.name || user.email %></td>
-          <td><%= player_status(user, issue) %></td>
+          <td class=""><%= game_room_user.name || game_room_user.email %> <%= "(removed)" if game_room_user.discarded? %> </td>
+          <td><%= player_status(game_room_user.user, issue) %></td>
+          <td>
+            <% if policy(game_room_user).destroy? %>
+              <%= button_to(remove_button_text(game_room_user.user),
+                game_room_game_room_user_path(game_room_user.game_room, game_room_user),
+                method: :delete,
+                form: { data: { turbo_confirm: confirm_remove_text(game_room_user.user) } },
+                class: "btn btn-danger btn-sm"
+              ) %>
+            <% end %>
+            <% if policy(game_room_user).add_role? %>
+              <% if game_room_user.user.has_role?(:admin, game_room) %>
+                <%= button_to("Remove Admin Role",
+                  game_room_user_roles_path(game_room_user.game_room, game_room_user_id: game_room_user),
+                  method: :delete,
+                  form: { data: { turbo_confirm: "Are you sure you want to remove the admin role for #{game_room_user.name}?" } },
+                  class: "btn btn-warning btn-sm"
+                ) %>
+              <% else %>
+                <%= button_to("Give Admin Role",
+                  game_room_user_roles_path(game_room_user.game_room, game_room_user_id: game_room_user),
+                  method: :post,
+                  form: { data: { turbo_confirm: "Are you sure you want to give admin privileged to #{game_room_user.name}?" } },
+                  class: "btn btn-primary btn-sm"
+                ) %>
+              <% end %>
+            <% end %>
+          </td>
         </tr>
       <% end %>
     </tbody>

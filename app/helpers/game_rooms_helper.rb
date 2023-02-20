@@ -20,4 +20,22 @@ module GameRoomsHelper
       "Vote"
     end
   end
+
+  private
+
+  def remove_button_text(user)
+    if user == Current.user
+      "Leave room"
+    else
+      "Remove Player"
+    end
+  end
+
+  def confirm_remove_text(user)
+    if user == Current.user
+      "Are you sure you want to leave the room?"
+    else
+      "Are you sure you want to remove this player?"
+    end
+  end
 end

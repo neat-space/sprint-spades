@@ -8,7 +8,7 @@ class GameRoomPolicy < ApplicationPolicy
   end
 
   def update?
-    user_created_game_room?
+    user.has_role?(:owner, record) || user.has_role?(:admin, record)
   end
 
   def edit?
@@ -16,22 +16,18 @@ class GameRoomPolicy < ApplicationPolicy
   end
 
   def destroy?
-    user_created_game_room?
+    user.has_role?(:owner, record)
   end
 
   class Scope < Scope
     def resolve
-      user.game_rooms.all
+      user.game_room_users.kept.map(&:game_room)
     end
   end
 
   private
 
   def game_room_users_exists?
-    record.users.include?(user)
-  end
-
-  def user_created_game_room?
-    record.user_id == user.id
+    record.game_room_users.kept.exists?(user_id: user.id)
   end
 end
