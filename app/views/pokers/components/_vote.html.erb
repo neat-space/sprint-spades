@@ -1,7 +1,10 @@
 <%= turbo_frame_tag "vote_actions" do %>
   <% if issue.present? %>
     <% if issue.points_revealed_at %>
-      <%= render "pokers/components/revealed_points", issue: issue %>
+      <div class="d-flex justify-content-end align-items-center">
+        <%= link_to "Revote", new_game_room_issue_revotes_path(issue.game_room, issue), class: "btn btn-outline-primary mx-2", data: { turbo_frame: 'modal' }  if policy(issue).revote? %>
+        <%= render "pokers/components/revealed_points", issue: issue %>
+      </div>
     <% else %>
       <% if poker.persisted? %>
         <%= button_to "Clear your vote", game_room_poker_path(issue.game_room, poker), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-outline-danger ml-2", style: "float: right;" %>
