@@ -1,6 +1,6 @@
 module GameRoomsHelper
   def generate_invitation_url(game_room)
-    "#{root_url.gsub(/\/$/, '')}/game_rooms/join/#{game_room.token}"
+    "#{root_url.gsub(%r{/$}, '')}/game_rooms/join/#{game_room.token}"
   end
 
   def player_status(user, issue)
@@ -8,10 +8,17 @@ module GameRoomsHelper
 
     if user.already_voted?(issue)
       if issue.points_revealed_at
-        poker = Poker.find_by(issue: issue, user: user)
-
+        poker = Poker.find_by(issue:, user:)
         if poker.remarks.present?
-          link_to "Voted with #{poker.story_points} points", game_room_poker_path(issue.game_room, poker), class: "btn btn-sm btn-outline-primary", data: { turbo_frame: "modal" }
+          tag.div(class:"d-flex align-items-center justify-content-between") do
+            tag.span("Voted with #{pluralize(poker.story_points, 'point')}", class: "badge bg-success") +
+            link_to(
+              "See Remarks",
+              game_room_poker_path(issue.game_room, poker),
+              class: "btn btn-sm btn-outline-secondary",
+              data: { turbo_frame: "modal" }
+            )
+          end
         else
           tag.span("Voted with #{poker.story_points} points", class: "badge bg-success")
         end

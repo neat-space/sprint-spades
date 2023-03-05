@@ -1,3 +1,20 @@
 <%= turbo_frame_tag "modal" do %>
-  <h1><%= @poker.remarks %></h1>
+  <div class="modal fade" id="remarks-modal" tabindex="-1" aria-labelledby="remarks-modal" data-controller="modal" data-action="turbo:before-render@document->modal#hideBeforeRender">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="remarks-modal"><%= @poker.user.name %> voted with <%= pluralize(@poker.story_points, "point") %></h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>
+            <%= @poker.remarks %>
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
 <% end %>
