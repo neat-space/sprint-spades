@@ -1,23 +1,41 @@
 module GameRoomsHelper
   def generate_invitation_url(game_room)
-    "#{root_url.gsub(/\/$/, '')}/game_rooms/join/#{game_room.token}"
+    "#{root_url.gsub(%r{/$}, '')}/game_rooms/join/#{game_room.token}"
   end
 
   def player_status(user, issue)
     return if issue.nil?
 
     if user.already_voted?(issue)
-      issue.points_revealed_at ? "Voted with #{user.points_for(issue)} points" : "Voted"
+      if issue.points_revealed_at
+        poker = Poker.find_by(issue:, user:)
+        if poker.remarks.present?
+          tag.div(class:"d-flex align-items-center justify-content-between") do
+            tag.span("Voted with #{pluralize(poker.story_points, 'point')}", class: "badge bg-success") +
+            link_to(
+              "See Remarks",
+              game_room_poker_path(issue.game_room, poker),
+              class: "btn btn-sm btn-outline-secondary",
+              data: { turbo_frame: "modal" }
+            )
+          end
+        else
+          tag.span("Voted with #{poker.story_points} points", class: "badge bg-success")
+        end
+      else
+        tag.span("Voted", class: "badge bg-success")
+      end
+
     else
-      issue.points_revealed_at ? "Didn't vote" : "Not voted yet"
+      issue.points_revealed_at ? tag.span("Didn't vote", class: "badge bg-secondary") : tag.span("Not voted", class: 'badge bg-secondary')
     end
   end
 
-  def display_vote_text(issue)
-    if Current.user.already_voted?(issue)
-      "Update your vote"
+  def vote_details_helper(poker, issue)
+    if poker.persisted?
+      { text: "Update Vote", path: edit_game_room_poker_path(issue.game_room, poker) }.with_indifferent_access
     else
-      "Vote"
+      { text: "Vote", path: new_game_room_poker_path(issue.game_room) }.with_indifferent_access
     end
   end
 

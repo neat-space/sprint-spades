@@ -1,10 +1,18 @@
 class IssuePolicy < ApplicationPolicy
-  def create?
+  def new?
     user_is_an_admin_or_owner?(record.game_room)
+  end
+
+  def create?
+    new?
   end
 
   def update?
     user_is_an_admin_or_owner?(record.game_room)
+  end
+
+  def edit?
+    update?
   end
 
   def destroy?
@@ -17,6 +25,10 @@ class IssuePolicy < ApplicationPolicy
 
   def set_current_issue?
     user_is_an_admin_or_owner?(record.game_room)
+  end
+
+  def revote?
+    user.has_role?(:owner, record.game_room) && record.points_revealed_at.present?
   end
 
   private

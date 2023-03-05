@@ -4,6 +4,7 @@ class Poker < ApplicationRecord
 
   validates :story_points, presence: true, numericality: true, inclusion: { in: [0, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144] }
   validates :user_id, uniqueness: { scope: :issue_id, message: "should be unique" }
+  validates :remarks, length: { maximum: 255 }
 
   after_save :update_issue_average_story_points
   after_commit :broadcast_to_player_table

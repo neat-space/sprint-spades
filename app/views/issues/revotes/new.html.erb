@@ -1,0 +1,23 @@
+<%= turbo_frame_tag "modal" do %>
+  <div class="modal" id="revote-modal" tabindex="-1" data-controller="modal" data-action="turbo:before-render@document->modal#hideBeforeRender">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Revote for <%= @issue.title %></h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <%= simple_form_for [@issue.game_room, @issue], method: :patch, url: game_room_issue_revotes_path(@issue.game_room, @issue) do |f| %>
+            <div class="form-check mb-3">
+              <%= f.input :delete_previous_votes, as: :boolean, label: 'Delete all previous votes' %>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+              <%= f.submit "Revote", class: "btn btn-primary", data: { disable_with: "Submitting..." } %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
