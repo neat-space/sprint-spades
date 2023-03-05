@@ -24,11 +24,11 @@ module GameRoomsHelper
     end
   end
 
-  def display_vote_text(issue)
-    if Current.user.already_voted?(issue)
-      "Update your vote"
+  def vote_details_helper(poker, issue)
+    if poker.persisted?
+      { text: "Update Vote", path: edit_game_room_poker_path(issue.game_room, poker) }.with_indifferent_access
     else
-      "Vote"
+      { text: "Vote", path: new_game_room_poker_path(issue.game_room) }.with_indifferent_access
     end
   end
 
