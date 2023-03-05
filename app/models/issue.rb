@@ -1,6 +1,8 @@
 class Issue < ApplicationRecord
   include ActionView::RecordIdentifier
 
+  attr_accessor :delete_previous_votes
+
   belongs_to :game_room
   has_many :pokers, dependent: :destroy
 

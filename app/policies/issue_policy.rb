@@ -20,7 +20,7 @@ class IssuePolicy < ApplicationPolicy
   end
 
   def revote?
-    user.has_role?(:owner, record.game_room)
+    user.has_role?(:owner, record.game_room) && record.points_revealed_at.present?
   end
 
   private

@@ -9,9 +9,10 @@ class Issues::RevotesController < ApplicationController
 
   def update
     @issue.update!(points_revealed_at: nil)
+    @issue.pokers.destroy_all if params[:issue][:delete_previous_votes] == "1"
 
     respond_to do |format|
-      format.html { redirect_to game_room_url(@game_room), notice: "Issue can be voted again!" }
+      format.html { redirect_to game_room_url(@game_room), notice: "Issue is open again!" }
       format.json { head :no_content }
     end
   end
@@ -26,9 +27,4 @@ class Issues::RevotesController < ApplicationController
   def set_game_room
     @game_room = GameRoom.find(params[:game_room_id])
   end
-
-  # Will be required in the future
-  # def revote_params
-  #   params.require(:revote).permit(:vote)
-  # end
 end
