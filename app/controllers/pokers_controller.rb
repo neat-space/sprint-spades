@@ -2,8 +2,15 @@ class PokersController < ApplicationController
   before_action :set_poker, only: %i[ update destroy show]
   before_action :set_game_room
 
+
+  def new
+    @poker = Current.user.pokers.new(issue: @game_room.current_issue)
+    @issue = @game_room.current_issue
+    authorize @poker
+  end
+
   def create
-    @poker = current_user.pokers.new(poker_params)
+    @poker = Current.user.pokers.new(poker_params)
     @poker.issue = @game_room.current_issue
     authorize @poker
 
