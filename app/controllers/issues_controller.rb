@@ -1,8 +1,13 @@
 class IssuesController < ApplicationController
   include ActionView::RecordIdentifier
 
-  before_action :set_issue, only: %i[ update destroy]
+  before_action :set_issue, only: %i[update destroy edit]
   before_action :set_game_room
+
+  def new
+    @issue = @game_room.issues.new
+    authorize @issue
+  end
 
   def create
     @issue = @game_room.issues.new(issue_params)
@@ -18,6 +23,9 @@ class IssuesController < ApplicationController
         format.json { render json: @issue.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def edit
   end
 
   def update
