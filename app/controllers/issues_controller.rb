@@ -57,18 +57,6 @@ class IssuesController < ApplicationController
     end
   end
 
-  def reveal_votes
-    issue = Issue.find(params[:issue_id])
-    authorize issue
-
-    issue.update!(points_revealed_at: Time.current)
-
-    respond_to do |format|
-      format.html { redirect_to game_room_url(@game_room), notice: "Points revealed!" }
-      format.json { head :no_content }
-    end
-  end
-
   private
 
     def set_issue

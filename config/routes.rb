@@ -7,8 +7,8 @@ Rails.application.routes.draw do
   resources :game_rooms do
     resources :issues do
       resource :revotes, only: %i[new update], controller: 'issues/revotes'
+      resource :reveal_votes, only: %i[new update], controller: 'issues/reveal_votes'
       put :set_current_issue
-      put :reveal_votes
     end
     resources :pokers
     resources :game_room_users, only: [:destroy]

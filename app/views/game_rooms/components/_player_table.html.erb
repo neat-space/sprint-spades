@@ -12,13 +12,13 @@
           <th scope="row"><%= i + 1 %></th>
           <td class=""><%= game_room_user.name || game_room_user.email %> <%= "(removed)" if game_room_user.discarded? %> </td>
           <td><%= player_status(game_room_user.user, issue) %></td>
-          <td>
+          <td class="d-flex">
             <% if policy(game_room_user).destroy? %>
               <%= button_to(remove_button_text(game_room_user.user),
                 game_room_game_room_user_path(game_room_user.game_room, game_room_user),
                 method: :delete,
                 form: { data: { turbo_confirm: confirm_remove_text(game_room_user.user) } },
-                class: "btn btn-danger btn-sm"
+                class: "btn btn-danger btn-sm mx-1"
               ) %>
             <% end %>
             <% if policy(game_room_user).add_role? %>

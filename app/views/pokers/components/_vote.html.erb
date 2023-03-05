@@ -15,7 +15,7 @@
       <%= link_to vote_helper[:text], vote_helper[:path], data: { turbo_frame: 'modal' }, class: "btn btn-outline-primary", style: "float: right; margin-right: 1em;" %>
 
       <% if issue.pokers.present? && policy(issue).reveal_votes? %>
-        <%= button_to "Reveal Votes", game_room_issue_reveal_votes_path(issue.game_room, issue), method: :put, class: "btn btn-outline-primary", style: "float: right; margin-right: 1em;" %>
+        <%= link_to "Reveal Votes", new_game_room_issue_reveal_votes_path(issue.game_room, issue), class: "btn btn-outline-primary", style: "float: right; margin-right: 1em;", data: { turbo_frame: 'modal' } %>
       <% end %>
     <% end %>
   <% end %>
