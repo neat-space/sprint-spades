@@ -2,7 +2,7 @@
   <li class="list-group-item d-flex justify-content-between align-items-start <%= issue_active?(game_room, issue) %>">
     <div class="ms-2 me-auto">
       <div class="fw-bold"><%= issue.title %> <%= render_average_points(issue) %></div>
-      <%= issue.description %>
+      <%= issue.description.to_plain_text.truncate(50) %>
     </div>
     <% if policy(issue).update? %>
       <div class="dropdown dropdown-issue float-end">

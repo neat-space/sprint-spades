@@ -1,7 +1,7 @@
 <%= turbo_frame_tag "issue-form-#{dom_id(issue)}", data: { controller: "turbo-frame", action: "turbo:submit-end -> turbo-frame#resetSrc" } do %>
   <%= simple_form_for issue, url: [game_room, issue], id: dom_id(issue), data: { turbo_frame: "_top" } do |form| %>
     <%= form.input :title %>
-    <%= form.input :description %>
+    <%= form.input :description, as: :rich_text_area %>
     <%= form.button :submit, class: "btn btn-primary mt-2" %>
   <% end %>
 <% end %>
