@@ -19,6 +19,10 @@ class IssuePolicy < ApplicationPolicy
     user_is_an_admin_or_owner?(record.game_room)
   end
 
+  def revote?
+    user.has_role?(:owner, record.game_room) && record.points_revealed_at.present?
+  end
+
   private
 
     def user_is_an_admin_or_owner?(record)

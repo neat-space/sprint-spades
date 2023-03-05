@@ -1,13 +1,14 @@
 class Issue < ApplicationRecord
   include ActionView::RecordIdentifier
 
+  attr_accessor :delete_previous_votes
+
   belongs_to :game_room
   has_many :pokers, dependent: :destroy
 
   validates :title, presence: true
 
   after_create_commit :update_game_room_current_issue
-  after_update_commit :broadcast_issue_update
   after_destroy :set_next_issue_as_current_issue
   after_destroy_commit :broadcast_issue_destroy
   after_update_commit :broadcast_entire_room
@@ -18,12 +19,6 @@ class Issue < ApplicationRecord
     game_room.update(current_issue_id: id)
   end
 
-  def broadcast_issue_update
-    game_room.users.each do |user|
-      Current.user = user
-      broadcast_update_to game_room, Current.user, partial: "issues/issue", locals: { game_room: game_room, issue: self }
-    end
-  end
 
   def broadcast_issue_destroy
     game_room.users.each do |user|
@@ -39,13 +34,10 @@ class Issue < ApplicationRecord
   end
 
   def broadcast_entire_room
-    return unless points_revealed_at
-
     game_room.users.each do |user|
       Current.user = user
 
-      broadcast_update_to game_room, Current.user, target: "vote_actions", partial: "pokers/components/revealed_points", locals: { issue: self }
-      broadcast_update_to game_room, Current.user, target: "player_table", partial: "game_rooms/components/player_table", locals: { game_room: game_room }
+      broadcast_update_to game_room, Current.user, target: "game_room", partial: "game_rooms/game_room", locals: { game_room: self.game_room }
     end
   end
 end
