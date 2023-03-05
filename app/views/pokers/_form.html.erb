@@ -3,6 +3,7 @@
   <%= simple_form_for(poker, url: url, id: dom_id(poker), data: { turbo_frame: "_top" }) do |form| %>
     <div class="modal-body">
       <%= form.input :story_points %>
+      <%= form.input :remarks %>
     </div>
 
     <div class="modal-footer">
