@@ -10,9 +10,11 @@
             <%= render issue, { game_room: game_room } %>
           <% end %>
         <% end %>
-        <li class="list-group-item">
-          <%= render 'game_rooms/components/new_issue', { game_room: game_room } if policy(game_room.issues.new).create? %>
-        </li>
+        <% if policy(game_room.issues.new).create? %>
+          <li class="list-group-item">
+            <%= link_to "New Issue", new_game_room_issue_path(game_room), class: "btn btn-primary", data: { turbo_frame: 'modal' } %>
+          </li>
+        <% end %>
       </ul>
     </div>
   </div>

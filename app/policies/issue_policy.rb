@@ -1,10 +1,18 @@
 class IssuePolicy < ApplicationPolicy
-  def create?
+  def new?
     user_is_an_admin_or_owner?(record.game_room)
+  end
+
+  def create?
+    new?
   end
 
   def update?
     user_is_an_admin_or_owner?(record.game_room)
+  end
+
+  def edit?
+    update?
   end
 
   def destroy?

@@ -1,8 +1,13 @@
 class IssuesController < ApplicationController
   include ActionView::RecordIdentifier
 
-  before_action :set_issue, only: %i[ update destroy]
+  before_action :set_issue, only: %i[update destroy edit]
   before_action :set_game_room
+
+  def new
+    @issue = @game_room.issues.new
+    authorize @issue
+  end
 
   def create
     @issue = @game_room.issues.new(issue_params)
@@ -18,6 +23,9 @@ class IssuesController < ApplicationController
         format.json { render json: @issue.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def edit
   end
 
   def update
@@ -54,18 +62,6 @@ class IssuesController < ApplicationController
         format.html { redirect_to game_room_url(@game_room), notice: "Something went wrong." }
         format.json { render json: @game_room.errors, status: :unprocessable_entity }
       end
-    end
-  end
-
-  def reveal_votes
-    issue = Issue.find(params[:issue_id])
-    authorize issue
-
-    issue.update!(points_revealed_at: Time.current)
-
-    respond_to do |format|
-      format.html { redirect_to game_room_url(@game_room), notice: "Points revealed!" }
-      format.json { head :no_content }
     end
   end
 
