@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" class="h-100">
   <head>
     <title>SprintSpades</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -10,12 +10,19 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <main>
-    <div class="container-fluid">
-      <%= render "shared/application_nav" %>
-      <%= render "shared/alerts" %>
-      <%= render "shared/modal" %>
-      <%= yield %>
-    </div>
-  </main>
+  <body class="d-flex flex-column h-100">
+      <header>
+        <%= render "shared/application_nav" %>
+      </header>
+
+      <div class="d-flex flex-column">
+        <main class="container-fluid">
+          <%= render "shared/alerts" %>
+          <%= render "shared/modal" %>
+          <%= yield %>
+        </main>
+      </div>
+
+      <%= render "shared/footer" %>
+  </body>
 </html>
