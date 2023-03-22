@@ -50,13 +50,14 @@ RSpec.describe Issue, type: :model do
     end
 
     describe "#set_next_issue_as_current_issue" do
-      let(:game_room) { create(:game_room) }
+      let!(:game_room) { create(:game_room) }
       let!(:issue) { create(:issue, game_room:) }
       let!(:second_issue) { create(:issue, game_room:) }
 
       it "sets the next issue as the current issue" do
-        issue.destroy
-        expect(game_room.current_issue_id).to eq(second_issue.id)
+        second_issue.destroy
+        game_room.reload
+        expect(game_room.current_issue_id).to eq(issue.id)
       end
     end
   end
