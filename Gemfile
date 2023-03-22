@@ -59,6 +59,7 @@ group :development, :test do
   gem "shoulda-matchers", "~> 5.3"
   gem "shoulda-callback-matchers", "~> 1.1"
   gem "simplecov", "~> 0.22.0"
+  gem 'annotate', '~> 3.2'
 end
 
 group :development do
