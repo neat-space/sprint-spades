@@ -1,18 +1,5 @@
 require 'rails_helper'
 
-def destroy
-  authorize @game_room_user, :remove_role?
-  respond_to do |format|
-    if @game_room_user.user.remove_role(:admin, @game_room)
-      format.html { redirect_to game_room_url(@game_room), notice: "Succesfully removed #{@game_room_user.name} as an admin." }
-      format.json { render :show, status: :created, location: @game_room }
-    else
-      format.html { redirect_to game_room_url(@game_room), alert: "Something went wrong." }
-      format.json { render json: { error: "Something went wrong"}, status: :unprocessable_entity }
-    end
-  end
-end
-
 RSpec.describe "UserRoles#destroy", type: :request do
   let(:user) { create(:user) }
   let(:game_room) { create(:game_room) }
