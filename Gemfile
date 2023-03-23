@@ -78,7 +78,7 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
   gem "webdrivers"
-  gem 'pundit-matchers', '~> 1.8.4'
+  gem 'pundit-matchers', '~> 1.8.4', require: false
 end
 
 gem "devise", "~> 4.8"
