@@ -205,7 +205,7 @@ GEM
     pundit-matchers (1.8.4)
       rspec-rails (>= 3.0.0)
     racc (1.6.2)
-    rack (2.2.6.2)
+    rack (2.2.6.4)
     rack-protection (3.0.5)
       rack
     rack-test (2.0.2)
