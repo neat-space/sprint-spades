@@ -60,7 +60,6 @@ group :development, :test do
   gem "shoulda-callback-matchers", "~> 1.1"
   gem "simplecov", "~> 0.22.0"
   gem 'annotate', '~> 3.2'
-  gem 'pundit-matchers', '~> 1.8.4'
 end
 
 group :development do
@@ -79,6 +78,7 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
   gem "webdrivers"
+  gem 'pundit-matchers', '~> 1.8.4', require: false
 end
 
 gem "devise", "~> 4.8"
