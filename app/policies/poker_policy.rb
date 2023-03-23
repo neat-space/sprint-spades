@@ -1,17 +1,23 @@
 class PokerPolicy < ApplicationPolicy
   def create?
-    record&.issue&.game_room&.game_room_users&.kept&.exists?(user_id: user.id)
+    user_is_active?
   end
 
   def show?
-    record&.issue&.game_room&.game_room_users&.kept&.exists?(user_id: user.id)
+    user_is_active?
   end
 
   def update?
-    record&.issue&.game_room&.game_room_users&.kept&.exists?(user_id: user.id)
+    user_is_active?
   end
 
   def destroy?
-    record&.issue&.game_room&.game_room_users&.kept&.exists?(user_id: user.id)
+    user_is_active?
   end
+
+  private
+
+    def user_is_active?
+      record&.issue&.game_room&.game_room_users&.kept&.exists?(user_id: user.id)
+    end
 end

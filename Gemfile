@@ -51,6 +51,15 @@ gem "image_processing", "~> 1.2"
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
+  gem "factory_bot_rails", "~> 6.2"
+  gem "rspec", "~> 3.12"
+  gem "rails-controller-testing", "~> 1.0"
+  gem "rspec-rails", "~> 6.0"
+  gem "faker", "~> 3.1"
+  gem "shoulda-matchers", "~> 5.3"
+  gem "shoulda-callback-matchers", "~> 1.1"
+  gem "simplecov", "~> 0.22.0"
+  gem 'annotate', '~> 3.2'
 end
 
 group :development do
@@ -69,22 +78,15 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
   gem "webdrivers"
+  gem 'pundit-matchers', '~> 1.8.4', require: false
 end
 
 gem "devise", "~> 4.8"
-
 gem "bootstrap", "~> 5.2"
-
 gem "simple_form", "~> 5.1"
-
 gem "omniauth-google-oauth2", "~> 1.1"
 gem "omniauth-rails_csrf_protection", "~> 1.0"
-
-
 gem "pundit", "~> 2.3"
-
 gem "data_migrate", "~> 8.5"
-
 gem "discard", "~> 1.2"
-
 gem "rolify", "~> 6.0"
