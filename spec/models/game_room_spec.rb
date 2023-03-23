@@ -24,19 +24,23 @@ require 'rails_helper'
 
 RSpec.describe GameRoom, type: :model do
   describe 'associations' do
-    it { should belong_to(:creator).class_name('User').with_foreign_key('user_id') }
-    it { should belong_to(:current_issue).class_name('Issue').optional }
-    it { should have_many(:issues).dependent(:destroy) }
-    it { should have_many(:pokers).through(:issues).dependent(:destroy) }
-    it { should have_many(:game_room_users).dependent(:destroy) }
-    it { should have_many(:users).through(:game_room_users) }
+    it { is_expected.to belong_to(:creator).class_name('User').with_foreign_key('user_id') }
+    it { is_expected.to belong_to(:current_issue).class_name('Issue').optional }
+    it { is_expected.to have_many(:issues).dependent(:destroy) }
+    it { is_expected.to have_many(:pokers).through(:issues).dependent(:destroy) }
+    it { is_expected.to have_many(:game_room_users).dependent(:destroy) }
+    it { is_expected.to have_many(:users).through(:game_room_users) }
+  end
+
+  describe 'validations' do
+    it { is_expected.to validate_presence_of(:name) }
   end
 
   describe 'callbacks' do
-    it { should callback(:create_game_room_user).after(:commit) }
-    it { should callback(:set_token).before(:create) }
-    it { should callback(:set_owner_role).after(:create) }
-    it { should callback(:broadcast_current_issue).after(:commit).if(:saved_change_to_current_issue_id?) }
+    it { is_expected.to callback(:create_game_room_user).after(:commit) }
+    it { is_expected.to callback(:set_token).before(:create) }
+    it { is_expected.to callback(:set_owner_role).after(:create) }
+    it { is_expected.to callback(:broadcast_current_issue).after(:commit).if(:saved_change_to_current_issue_id?) }
   end
 
   describe 'methods' do

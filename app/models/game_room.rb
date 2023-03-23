@@ -36,6 +36,8 @@ class GameRoom < ApplicationRecord
 
   after_update_commit :broadcast_current_issue, if: :saved_change_to_current_issue_id?
 
+  validates :name, presence: true
+
   private
 
     def create_game_room_user

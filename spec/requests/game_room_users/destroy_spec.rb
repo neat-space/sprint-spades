@@ -2,21 +2,6 @@
 
 require 'rails_helper'
 
-# def destroy
-#   @game_room_user = GameRoomUser.find(params[:id])
-#   authorize @game_room_user
-
-#   @game_room_user.discard
-#   respond_to do |format|
-#     if @game_room_user.user == current_user
-#       format.html { redirect_to root_url, notice: "You have left the room." }
-#     else
-#       format.html { redirect_to game_room_url(@game_room_user.game_room), notice: "User was successfully removed." }        
-#     end
-#     format.json { head :no_content }
-#   end
-# end
-
 RSpec.describe "GameRoomUsers#destroy", type: :request do
   let!(:user) { create(:user) }
   let!(:game_room) { create(:game_room) }
