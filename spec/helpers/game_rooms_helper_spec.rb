@@ -56,9 +56,11 @@ RSpec.describe GameRoomsHelper, type: :helper do
         end
 
         context "when poker does not have remarks" do
+          before do
+            poker.update(remarks: nil)
+          end
           it "returns the correct text" do
-            puts helper.player_status(user, issue)
-            expect(helper.player_status(user, issue)).to include(tag.span("Voted with #{poker.story_points} point", class: "badge bg-success"))
+            expect(helper.player_status(user, issue)).to eq(tag.span("Voted with #{poker.story_points} points", class: "badge bg-success"))
           end
         end
       end
