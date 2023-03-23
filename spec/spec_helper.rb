@@ -1,4 +1,5 @@
 require 'simplecov'
+require 'pundit/matchers'
 
 SimpleCov.start 'rails' do
   add_filter '/bin/'
