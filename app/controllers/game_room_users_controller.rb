@@ -2,8 +2,6 @@ class GameRoomUsersController < ApplicationController
   # POST /game_rooms/join
   def create
     @game_room = GameRoom.find_by(token: params[:token])
-    authorize @game_room
-    
     respond_to do |format|
       if @game_room
         @game_room_user = GameRoomUser.find_or_initialize_by(game_room: @game_room, user: current_user)

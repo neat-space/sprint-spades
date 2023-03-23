@@ -2,7 +2,7 @@ class UserRolesController < ApplicationController
   before_action :set_game_room, :set_game_room_user, only: [:create, :destroy]
 
   def create
-    authorize @game_room_user, :remove_role?
+    authorize @game_room_user, :add_role?
     respond_to do |format|
       if @game_room_user.user.add_role(:admin, @game_room)
         format.html { redirect_to game_room_url(@game_room), notice: "Succesfully added #{@game_room_user.name} as an admin." }
