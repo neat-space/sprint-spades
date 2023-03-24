@@ -5,7 +5,6 @@
       <%= render "game_rooms/components/invite_players", game_room: game_room %>
       <%= render "pokers/components/vote", poker: Poker.find_or_initialize_by(issue: game_room.current_issue, user: Current.user), issue: game_room.current_issue %>
       <%= render "game_rooms/components/player_table", game_room: game_room, issue: game_room.current_issue %>
-      <%= render "game_rooms/components/remarks_modal", game_room: game_room, issue: game_room.current_issue %>
     </div>
     <div class="col-3">
       <%= render 'game_rooms/components/issues', game_room: game_room, issues: game_room.issues %>

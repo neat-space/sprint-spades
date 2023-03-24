@@ -1,13 +1,18 @@
 <%= turbo_frame_tag "poker-form", data: { controller: "turbo-frame", action: "turbo:submit-end -> turbo-frame#resetSrc" } do %>
-  <% url = poker.persisted? ? game_room_poker_path(game_room, poker) : game_room_pokers_path(game_room) %>
-  <%= simple_form_for(poker, url: url, id: dom_id(poker), data: { turbo_frame: "_top" }) do |form| %>
+  <% form_data = poker.persisted? ?
+    { url: game_room_poker_path(game_room, poker), button_enabled_text: "Update Vote", button_disabled_text: "Updating Vote..." }
+    : { url: game_room_pokers_path(game_room), button_enabled_text: "Vote", button_disabled_text: "Voting..." }
+  %>
+  <%= simple_form_for(poker, url: form_data[:url], id: dom_id(poker), data: { turbo_frame: "_top" }) do |form| %>
     <div class="modal-body">
       <%= form.input :story_points %>
       <%= form.input :remarks %>
     </div>
 
     <div class="modal-footer">
-      <%= form.submit class: 'btn btn-primary', data: { turbo_frame: "_top", disable_with: false } %>
+      <%= form.button :button, class: 'btn btn-primary', data: { turbo_frame: "_top" } do %>
+        <%= button_text enabled_text: form_data[:button_enabled_text], disabled_text: form_data[:button_disabled_text] %>
+      <% end %> 
       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
     </div>
   <% end %>

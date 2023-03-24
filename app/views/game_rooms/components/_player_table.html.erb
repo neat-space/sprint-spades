@@ -14,28 +14,33 @@
           <td><%= player_status(game_room_user.user, issue) %></td>
           <td class="d-flex">
             <% if policy(game_room_user).destroy? %>
-              <%= button_to(remove_button_text(game_room_user.user),
+              <%= button_to(
                 game_room_game_room_user_path(game_room_user.game_room, game_room_user),
                 method: :delete,
                 form: { data: { turbo_confirm: confirm_remove_text(game_room_user.user) } },
-                class: "btn btn-danger btn-sm mx-1"
-              ) %>
+                class: "btn btn-danger btn-sm mx-1") do %>
+                <%= button_text enabled_text: remove_button_text(game_room_user.user), disabled_text: "Removing.." %>
+              <% end %>
             <% end %>
             <% if policy(game_room_user).add_role? %>
               <% if game_room_user.user.has_role?(:admin, game_room) %>
-                <%= button_to("Remove Admin Role",
+                <%= button_to(
                   game_room_user_roles_path(game_room_user.game_room, game_room_user_id: game_room_user),
                   method: :delete,
                   form: { data: { turbo_confirm: "Are you sure you want to remove the admin role for #{game_room_user.name}?" } },
                   class: "btn btn-warning btn-sm"
-                ) %>
+                ) do %>
+                  <%= button_text enabled_text: "Remove Admin Role", disabled_text: "Removing.." %>
+                <% end %>
               <% else %>
-                <%= button_to("Give Admin Role",
+                <%= button_to(
                   game_room_user_roles_path(game_room_user.game_room, game_room_user_id: game_room_user),
                   method: :post,
                   form: { data: { turbo_confirm: "Are you sure you want to give admin privileged to #{game_room_user.name}?" } },
                   class: "btn btn-primary btn-sm"
-                ) %>
+                ) do %>
+                  <%= button_text enabled_text: "Give Admin Role", disabled_text: "Giving.." %>
+                <% end %>
               <% end %>
             <% end %>
           </td>

@@ -50,10 +50,4 @@ class ApplicationPolicy
 
     attr_reader :user, :scope
   end
-
-  private
-
-    def user_is_creator?
-      user == record.creator
-    end
 end
