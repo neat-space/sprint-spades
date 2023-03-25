@@ -12,12 +12,14 @@ module GameRoomsHelper
         if poker.remarks.present?
           tag.div(class:"d-flex align-items-center justify-content-between") do
             tag.span("Voted with #{pluralize(poker.story_points, 'point')}", class: "badge bg-success") +
-            link_to(
-              "See Remarks",
+            button_to(
               game_room_poker_path(issue.game_room, poker),
+              method: :get,
               class: "btn btn-sm btn-outline-secondary",
               data: { turbo_frame: "modal" }
-            )
+            ) do
+              concat button_text enabled_text: "See Remarks", disabled_text: "Loading..."
+            end
           end
         else
           tag.span("Voted with #{poker.story_points} points", class: "badge bg-success")

@@ -13,7 +13,9 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-              <%= f.submit "Revote", class: "btn btn-primary", data: { disable_with: "Submitting..." } %>
+              <%= f.button :button, class: 'btn btn-primary', data: { turbo_frame: "_top" } do %>
+                <%= button_text enabled_text: "Revote", disabled_text: "Revoting..." %>
+              <% end %>
             </div>
           <% end %>
         </div>

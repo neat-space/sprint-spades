@@ -32,4 +32,10 @@ RSpec.describe ApplicationHelper, type: :helper do
       expect(helper.link(content: "Home", url: "/")).to eq("<a class=\"\" id=\"\" rel=\"nofollow\" data-method=\"\" href=\"/\">Home</a>")
     end
   end
+
+  describe "#button_text" do
+    it "returns the button text" do
+      expect(concat helper.button_text(enabled_text: "Create Issue", disabled_text: "Loading...", icon_style: 'fa fa-solid fa-spinner')).to eq("<span class=\"show-when-enabled\">Create Issue</span><span class=\"show-when-disabled\">Loading... <i class=\"fa fa-solid fa-spinner\"></i></span>")
+    end
+  end
 end

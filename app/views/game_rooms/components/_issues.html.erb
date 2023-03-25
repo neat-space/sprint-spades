@@ -12,7 +12,9 @@
         <% end %>
         <% if policy(game_room.issues.new).create? %>
           <li class="list-group-item">
-            <%= link_to "New Issue", new_game_room_issue_path(game_room), class: "btn btn-primary", data: { turbo_frame: 'modal' } %>
+            <%= button_to new_game_room_issue_path(game_room), method: :get, class: "btn btn-primary", data: { turbo_frame: 'modal' } do %>
+              <%= button_text enabled_text: "New Issue" %>
+            <% end %>
           </li>
         <% end %>
       </ul>

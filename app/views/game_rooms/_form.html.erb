@@ -1,4 +1,10 @@
+<% form_data = game_room.persisted? ?
+  { button_enabled_text: "Update Game Room", button_disabled_text: "Updating..." } :
+  { button_enabled_text: "Create Game Room", button_disabled_text: "Creating..." }
+%>
 <%= simple_form_for(game_room) do |form| %>
   <%= form.input :name %>
-  <%= form.submit class: 'btn btn-primary mt-2', data: { turbo_frame: "_top", disable_with: false } %>
+  <%= form.button :button, class: 'btn btn-primary mt-2', data: { turbo_frame: "_top" } do %>
+    <%= button_text enabled_text: form_data[:button_enabled_text], disabled_text: form_data[:button_disabled_text] %>
+  <% end %>
 <% end %>
