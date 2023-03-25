@@ -43,15 +43,13 @@ RSpec.describe GameRoomsHelper, type: :helper do
           end
 
           it "returns the correct text" do
-            expect(helper.player_status(user, issue)).to eq(tag.div(class:"d-flex align-items-center justify-content-between") do
-              tag.span("Voted with #{pluralize(poker.story_points, 'point')}", class: "badge bg-success") +
-              link_to(
-                "See Remarks",
-                game_room_poker_path(issue.game_room, poker),
-                class: "btn btn-sm btn-outline-secondary",
-                data: { turbo_frame: "modal" }
-              )
-            end)
+            result = helper.player_status(user, issue)
+
+            expect(result).to have_selector("div.d-flex.align-items-center.justify-content-between")
+            expect(result).to have_selector("span.badge.bg-success", text: "Voted with #{poker.story_points} point")
+            expect(result).to have_selector("button.btn.btn-sm.btn-outline-secondary")
+            expect(result).to have_selector("span.show-when-enabled", text: "See Remarks")
+            expect(result).to have_selector("span.show-when-disabled", text: "Loading...")
           end
         end
 

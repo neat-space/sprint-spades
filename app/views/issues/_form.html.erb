@@ -1,7 +1,13 @@
 <%= turbo_frame_tag "issue-form-#{dom_id(issue)}", data: { controller: "turbo-frame", action: "turbo:submit-end -> turbo-frame#resetSrc" } do %>
+  <% form_data = issue.persisted? ?
+    { button_enabled_text: "Update Issue", button_disabled_text: "Updating Issue..." }
+    : { button_enabled_text: "Create Issue", button_disabled_text: "Creating Issue..." }
+  %>
   <%= simple_form_for issue, url: [game_room, issue], id: dom_id(issue), data: { turbo_frame: "_top" } do |form| %>
     <%= form.input :title %>
     <%= form.input :description, as: :rich_text_area %>
-    <%= form.button :submit, class: "btn btn-primary mt-2" %>
+    <%= form.button :button, class: 'btn btn-primary mt-2', data: { turbo_frame: "_top" } do %>
+      <%= button_text enabled_text: form_data[:button_enabled_text], disabled_text: form_data[:button_disabled_text] %>
+    <% end %>
   <% end %>
 <% end %>

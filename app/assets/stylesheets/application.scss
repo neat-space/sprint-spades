@@ -8,3 +8,13 @@
   padding: 15px;
   margin: auto;
 }
+
+button {
+  .show-when-enabled { display: initial; }
+  .show-when-disabled { display: none; }
+
+  &:disabled {
+    .show-when-enabled { display: none; }
+    .show-when-disabled { display: initial; }
+  }
+}
