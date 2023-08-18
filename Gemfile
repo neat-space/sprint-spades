@@ -90,3 +90,8 @@ gem "pundit", "~> 2.3"
 gem "data_migrate", "~> 8.5"
 gem "discard", "~> 1.2"
 gem "rolify", "~> 6.0"
+gem "dockerfile-rails", ">= 1.5", :group => :development
+
+gem "sentry-ruby", "~> 5.10"
+
+gem "sentry-rails", "~> 5.10"
