@@ -95,3 +95,5 @@ gem "sentry-rails", "~> 5.10"
 
 gem "activerecord-enhancedsqlite3-adapter", "~> 0.8.0"
 gem "litestream", "~> 0.10.4"
+
+gem "foreman", "~> 0.88.1"

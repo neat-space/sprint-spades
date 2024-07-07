@@ -140,6 +140,7 @@ GEM
       ruby2_keywords (>= 0.0.4)
     faraday-net_http (3.0.2)
     ffi (1.15.5)
+    foreman (0.88.1)
     globalid (1.2.1)
       activesupport (>= 6.1)
     hashie (5.0.0)
@@ -410,6 +411,7 @@ DEPENDENCIES
   discard (~> 1.2)
   factory_bot_rails (~> 6.2)
   faker (~> 3.1)
+  foreman (~> 0.88.1)
   image_processing (~> 1.2)
   importmap-rails
   jbuilder
