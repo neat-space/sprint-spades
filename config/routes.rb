@@ -4,6 +4,8 @@ Rails.application.routes.draw do
     omniauth_callbacks: 'users/omniauth_callbacks'
   }
 
+  get "/up" => "rails/health#show"
+
   resources :game_rooms do
     resources :issues do
       resource :revotes, only: %i[new update], controller: 'issues/revotes'
