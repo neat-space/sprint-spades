@@ -4,6 +4,8 @@
 ARG RUBY_VERSION=3.3.3
 FROM registry.docker.com/library/ruby:$RUBY_VERSION-slim AS base
 
+ARG BUNDLER_VERSION="2.4.3"
+
 # Rails app lives here
 WORKDIR /rails
 
@@ -16,12 +18,20 @@ ENV RAILS_ENV="production" \
 # Throw-away build stage to reduce size of final image
 FROM base AS build
 
+# Ensure bundler is updated or set to the correct version
+RUN gem install -N bundler -v ${BUNDLER_VERSION}
+
 # Install packages needed to build gems and Node.js for JavaScript runtime
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y build-essential git libvips pkg-config nodejs
 
 # Install application gems
 COPY Gemfile Gemfile.lock ./
+
+
+# Add the ARM64 platform to the Gemfile.lock before installation
+RUN bundle lock --add-platform aarch64-linux
+
 RUN bundle install && \
     rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git && \
     bundle exec bootsnap precompile --gemfile
@@ -49,8 +59,11 @@ COPY --from=build /rails /rails
 
 # Run and own only the runtime files as a non-root user for security
 RUN useradd rails --create-home --shell /bin/bash && \
+    mkdir -p /data && \
     chown -R rails:rails db log storage tmp
 USER rails:rails
+
+ENV DATABASE_URL="sqlite3:///data/production.sqlite3"
 
 # Entrypoint prepares the database.
 ENTRYPOINT ["/rails/bin/docker-entrypoint"]
