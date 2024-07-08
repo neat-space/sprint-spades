@@ -9,8 +9,7 @@
       <%= f.input :password,
                   required: false,
                   input_html: { autocomplete: "current-password", placeholder: "Password" } %>
-      <%# TODO:- Figure out why remember me doesn't work at all!!!!  %>
-      <%#= f.input :remember_me, as: :boolean if devise_mapping.rememberable? %>
+      <%= f.input :remember_me, as: :boolean if devise_mapping.rememberable? %>
     </div>
 
     <div class="form-actions">
