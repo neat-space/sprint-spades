@@ -2,7 +2,7 @@
 
 Sprint Spades: A simple planning poker tool using Hotwire and Rails.
 
-## Development Setup
+## Non Production Setup
 
 To setup Sprint Spades on your local machine, follow the steps below:
 
